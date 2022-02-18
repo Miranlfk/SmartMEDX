@@ -1,9 +1,18 @@
-
 import React, { Component } from "react"
 import './App.css'
-import { getWeb3 } from "./getWeb3"
-import map from "./artifacts/deployments/map.json"
-import { getEthereum } from "./getEthereum"
+import { getWeb3 } from "./getWeb3";
+import map from "./artifacts/deployments/map.json";
+import { getEthereum } from "./getEthereum";
+import { StyledDropZone } from 'react-drop-zone';
+import { FileIcon, defaultStyles } from 'react-file-icon';
+import "react-drop-zone/dist/styles.css";
+import "bootstrap/dist/css/bootstrap.css";
+import { Table } from 'reactstrap';
+import fileReaderPullStream from 'pull-file-reader';
+import ipfs from './ipfs';
+import FormREg from './Form';
+
+
 
 class App extends Component {
 
@@ -11,12 +20,22 @@ class App extends Component {
         web3: null,
         accounts: null,
         chainid: null,
+
         registration: null,
-        regValue: 0,
-        regInput: null,
-        simpleStorage: null,
-        simpleValue: 0,
-        simpleInput: 0,
+        patient_name: null,
+        contact_number: 0,
+        Age: 0,
+        Career: null,
+        Address: null,
+        Email: null,
+        CurrentMedication: null,
+
+        healthStorage: null,
+        // simpleValue: 0,
+        // simpleInput: 0,
+
+        healthRecords: [],
+        contract: null
     }
 
     componentDidMount = async () => {
@@ -28,6 +47,8 @@ class App extends Component {
         try {
             const ethereum = await getEthereum()
             ethereum.request({ method: 'eth_requestAccounts' });
+
+
         } catch (e) {
             console.log(`Could not enable accounts. Interaction with contracts not available.
             Use a modern browser with a Web3 plugin to fix this issue.`)
@@ -44,7 +65,7 @@ class App extends Component {
             web3,
             accounts,
             chainid
-        }, await this.loadInitialContracts)
+        }, await this.loadInitialContracts, this.getFiles)
 
     }
 
@@ -61,20 +82,20 @@ class App extends Component {
         }
 
         const registration = await this.loadContract(_chainID, "Registration")
-        const simpleStorage = await this.loadContract(_chainID, "SimpleStorage")
+        const simpleStorage = await this.loadContract(_chainID, "HealthRecords")
 
         if (!registration || !simpleStorage) {
             return
         }
-
+        //this.setState(this.getFiles());
         const regValue = await registration.methods.patientIDGenerator().call()
-        const simpleValue = await simpleStorage.methods.get().call()
+        //const simpleValue = await simpleStorage.methods.get().call()
 
         this.setState({
             registration,
             regValue,
             simpleStorage,
-            simpleValue,
+            // simpleValue,
         })
     }
 
@@ -135,6 +156,40 @@ class App extends Component {
             })
     }
 
+    getFiles = async () => {
+        //TODO
+        try {
+            const { accounts, contract } = this.state;
+            let filesLength = await contract.methods.getLength().call({ from: accounts[0] });
+            let files = []
+            for (let i = 0; i < filesLength; i++) {
+                let file = await contract.methods.retrieve_Records(i).call({ from: accounts[0] });
+                files.push(file);
+            }
+            this.setState({ healthRecords: files });
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
+
+    onDrop = async (file) => {
+        try {
+            const { contract, accounts } = this.state;
+
+            const stream = fileReaderPullStream(file);
+            const result = await ipfs.add(stream);            
+            const timeStamp = Math.round(+ new Date() / 1000);
+            const type = file.name.substr(file.name.lastIndexOf("." + 1));
+            let uploaded = await contract.methods.adding_Record(result[0].hash, file.name, type, timeStamp).send({ from: accounts[0] });
+            console.log(uploaded);
+            this.getFiles();
+            debugger;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     render() {
         const {
             web3, accounts,
@@ -150,6 +205,7 @@ class App extends Component {
 
 
         const isAccountsUnlocked = accounts ? accounts.length > 0 : false
+
 
         return (<div className="App">
             <h1>SmartMEDX EHR System.</h1>
@@ -200,6 +256,33 @@ class App extends Component {
 
                 </div>
             </form>
+
+            <div className="FileStore">
+                <div className="container pt-6">
+                    <StyledDropZone onDrop={this.onDrop} />
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th width="7%" scope="row">Type</th>
+                                <th>File Name</th>
+                                <th>Date </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th><FileIcon size={35} extension="docx" {...defaultStyles.docx} /></th>
+                                <th>478563976867457.docx</th>
+                                <th>2020/12/31</th>
+                            </tr>
+
+                        </tbody>
+                    </Table>
+                </div>
+            </div>
+
+            <div>
+                <FormREg></FormREg>
+            </div>
         </div>)
     }
 }
