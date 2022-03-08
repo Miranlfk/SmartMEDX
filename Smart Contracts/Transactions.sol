@@ -2,73 +2,79 @@
 
 pragma solidity ^0.8.7;
 
+import './Registration.sol';
+
 contract Transactions{
-    uint32 claim = 0;
-    uint32 surgeryCost = 0;
-    uint32 patientPayment = 0;
-    uint32 patientfunds = 0;
-    uint32[] transactionsList;
+
     bool approved = false;
 
+    struct Transaction {
+        uint claim;
+        uint surgeryCost;
+        uint patientPayment;
+        uint patientfunds;
 
-    function setClaim(uint32 clm) public {
-            claim = clm;
     }
 
-    function getClaim() public view returns (uint32) {
-            return claim;
+    Transaction public transaction = Transaction({
+            claim : 0,
+            surgeryCost : 0,
+            patientPayment : 0,
+            patientfunds : 0
+    });
+    
+    mapping(uint => Transaction[]) public TransactionList;
+
+    function setClaim(uint _claim) public {
+            transaction.claim = _claim;
+    }
+
+    function getClaim() public view returns (uint) {
+            return transaction.claim;
     }
     
-    function setSurgeryCost(uint32 cost) public {
-            surgeryCost = cost;
+    function setSurgeryCost(uint _sCost) public {
+            transaction.surgeryCost = _sCost;
     }
 
-    function getSurgeryCost() public view returns (uint32) {
-            return surgeryCost;
+    function getSurgeryCost() public view returns (uint) {
+            return transaction.surgeryCost;
     }
 
-    function setPatientCharge(uint32 cost) public {
-            patientPayment = cost;
+    function setPatientCharge(uint _pCost) public {
+            transaction.patientPayment = _pCost;
     }
 
-    function getPatientCharge() public view returns (uint32) {
-            return patientPayment;
+    function getPatientCharge() public view returns (uint) {
+            return transaction.patientPayment;
     }
 
-    function setPatientFunds(uint32 funds) public {
-            patientfunds = funds;
+    function setPatientFunds(uint _funds) public {
+            transaction.patientfunds = _funds;
     }
 
-    function getPatientFunds() public view returns (uint32) {
-            return patientfunds;
+    function getPatientFunds() public view returns (uint) {
+            return transaction.patientfunds;
     }
 
-    function handleClaim() public {
-            if (getSurgeryCost() <= getClaim()){
+    function addTransaction  (uint _id,  uint _claim, uint _sCost, uint _pCost, uint _funds) public { 
+        TransactionList[_id].push(Transaction({claim :_claim, surgeryCost : _sCost, patientPayment : _pCost, patientfunds : _funds}));
+    }
+
+
+    function handleClaim() external {
+            if (getClaim() >= getSurgeryCost() ){
                     approved = true;
-                    setPatientCharge(0);
             }
             else {
-                    setPatientCharge(getSurgeryCost() - getClaim());
+                    setPatientCharge(getSurgeryCost() - (getClaim() +  getPatientFunds()));
                     manageFunds();
             }
-            transactionsList.push(getClaim());
+
     }
 
-    function manageFunds() internal{
-            if (getPatientFunds() > getPatientCharge()){
-                    approved = true;
-            } else{
-                    revert ("Insufficient Funds");                  
-            }
-            
-    }
-
-    function viewTransactions() public view {
-            for (uint i = 0; i < transactionsList.length; i++){
-                   transactionsList[i];
-            }
-
+    function manageFunds() internal view {
+            require (getPatientFunds() > getPatientCharge(), "Insufficient Patient Funds");
     }
 
 }
