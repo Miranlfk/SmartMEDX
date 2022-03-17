@@ -1,0 +1,24 @@
+.btn-primary {
+    color: #fff;
+    background-color: #813AFE !important;
+    border-color: #813AFE !important;
+    width: 21.5pc;
+}
+
+.icon-img{
+ width: 70px;
+ height: 70;
+ margin-bottom: 2rem;
+}
+
+
+
+
+.button-medic{
+    color: antiquewhite;
+    margin-top: 20;
+    padding-top: 20cm;
+    float: right;
+    position: absolute
+}
+

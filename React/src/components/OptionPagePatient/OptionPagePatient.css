@@ -1,0 +1,86 @@
+.history{
+  
+    margin-left: 80px;
+    margin-top: 20px;
+    margin-top: 3.5%;
+    margin-bottom: 3%;
+    width: 28%;
+
+   margin-left: 15%; 
+   border:5px solid #185bc7;
+   border-radius: 20px;
+   padding: 5px;
+   background-color:white;
+   padding: 2%;
+   height: 85%
+
+}
+.records{
+
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-top: 3.5%;
+    margin-bottom: 3%;
+    width: 28%;
+
+   margin-left: 15%; 
+   border:5px solid #185bc7;
+   border-radius: 20px;
+   padding: 5px;
+   background-color:white;
+   padding: 2%;
+   height: 85%
+    
+}
+
+
+
+.option-wrapper{
+    
+    display: flex;
+    margin-top: 20px;
+    display: flex;
+    margin:auto;
+    width: 95%;
+    height:600px;
+    
+    
+}
+
+.aaaa{
+
+        margin-left: 30%;
+        margin-bottom: 25%;
+        margin-top: 10%
+}
+
+.topic{
+    font-family: Fantasy;
+    margin-left: 19%;
+    color:#185bc7; 
+   
+   
+    
+    
+}
+.topic-2{
+
+    font-family: Fantasy;
+    margin-left: 15%;
+    color:#185bc7; 
+   
+
+}
+.btn-primary{
+    background-color: red;
+}
+.VTH{
+
+margin-left: 10%;
+border-radius: 8px;
+width: 80%;
+background-color:#185bc7 ;
+height: 8%;
+color: white;
+}
+

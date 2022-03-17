@@ -1,0 +1,114 @@
+.background{
+    color:white;
+  
+
+}
+
+
+
+.button-1:hover{
+    -webkit-transform: scale(1.1);
+   
+   background-color: #185BA2;
+   color: white;
+}
+
+.button-2:hover{
+   -webkit-transform: scale(1.1);
+   
+   background-color:  #185BA2;
+   color: white;
+}
+
+.button-3:hover{
+   -webkit-transform: scale(1.1);
+   
+   background-color:  #185BA2;
+   color: white;
+}
+   
+
+
+.button-1{
+    color: black;
+   background-color:#185BA2;
+   border-radius: 20px;
+   border-color:  #185BA2;
+  
+   
+   width: 150px;
+   height: 60px;
+   text-align: center;
+
+   margin: 20px;
+   float: left;
+   box-shadow: 0 0 1px #ccc;
+   -webkit-transition: all 0.5s ease-in-out;
+   border: 0px;
+   color: #fff;
+   border-radius: 10px; 
+
+ background-color: white; 
+ color: black; 
+ border: 2px solid  #185BA2;
+
+}
+.button-2{
+   
+   
+   border-radius: 10px;
+   
+  
+  
+   height: 60px;
+   width: 150px;
+   text-align: center;
+   
+   margin: 20px;
+   float: left;
+   box-shadow: 0 0 1px #ccc;
+   -webkit-transition: all 0.5s ease-in-out;
+   
+   
+   border-radius: 10px;
+
+   background-color: white; 
+   color: black; 
+   border: 2px solid  #185BA2;
+
+}
+.button-3{
+   color: black;
+   
+   border-radius: 10px;
+   
+  
+   height: 60px;
+   width: 150px;
+
+   margin: 20px;
+   float: left;
+   box-shadow: 0 0 1px #ccc;
+   -webkit-transition: all 0.5s ease-in-out;
+  
+  
+   border-radius: 10px;
+
+   background-color: white; 
+   color: black; 
+   border: 2px solid  #185BA2;
+}
+
+
+
+.w-20{
+   height: 620px;
+   
+}
+.medicalup-head{
+
+   font-family: Fantasy;
+     color: #185BA2;
+     margin-bottom: 10%;
+     margin-top: 10%;
+}
