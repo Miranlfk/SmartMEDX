@@ -148,6 +148,12 @@ class TransactionRecords extends Component {
             console.log(_account);
             let patientfund = await transactions.methods.setPatientFunds(patient.patientfunds).call({ from: accounts[0] });
             console.log(patientfund);
+            
+            let date = await transactions.methods.setDate(patient.Date).call({ from: accounts[0] });
+            console.log(date);
+
+            let surgeryName = await transactions.methods.setSurgeryName(patient.surgeryName).call({ from: accounts[0] });
+            console.log(surgeryName);
 
             this.surgeryCost = await transactions.methods.setSurgeryCost(patient.SurgeryCost).call({ from: accounts[0] });
             console.log(this.surgeryCost);
@@ -155,7 +161,7 @@ class TransactionRecords extends Component {
             this.claimAmount = await transactions.methods.setClaim(claimAmount).call({ from: accounts[0] });
             console.log(this.claimAmount);
 
-            let trans = transactions.methods.addTransaction(patientID, claimAmount, surgeryCost, patientPayment, patientfunds).send({ from: accounts[0] });
+            let trans = transactions.methods.addTransaction( patientID, date, surgeryName, claimAmount, surgeryCost, patientPayment, patientfunds).send({ from: accounts[0] });
             console.log(trans);
 
         }
@@ -278,6 +284,8 @@ class TransactionRecords extends Component {
                             <table>
                                 <thead>
                                     <tr>
+                                        <th>Date</th>
+                                        <th>Surgery Name</th>
                                         <th>Surgery Cost</th>
                                         <th>Surgery Claim</th>
                                         <th>Patient Funds</th>
@@ -287,10 +295,11 @@ class TransactionRecords extends Component {
                                 <tbody>
                                 {transactionslist !== [] ? transactionslist.map((item, key) => (
                                     <tr>
-                                        
-                                        <th>{item[1]}</th>
                                         <th>{item[0]}</th>
+                                        <th>{item[1]}</th>
                                         <th>{item[3]}</th>
+                                        <th>{item[2]}</th>
+                                        <th>{item[4]}</th>
                                             
                                         
                                     </tr>
