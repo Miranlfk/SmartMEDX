@@ -1,0 +1,118 @@
+.video-wrapper {
+   
+    max-width: 100%;
+    
+   width: 100%;
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+}
+.video-wrapper video {
+    object-fit: cover;
+    height: 90vh;    
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .video-description {
+    background: transparent;
+    position: absolute;
+    top: -160px;
+    right: 0;
+    bottom: 0;
+    left: -60px;
+    width: 65%;
+    height:100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .video-description h1 {
+      width: 100%;
+    background: #fff none repeat scroll 0 0;
+    color: #000;
+    font-family: "Nobile",sans-serif;
+    font-size: 2em;
+    margin: 0;
+    padding: 6px 12px;
+    text-align: center;
+ 
+}
+.BackGd{
+				
+		background-attachment:fixed;		
+		background-size:cover;
+		min-height:850px;
+		left:0;	
+		 				
+	}
+			
+	
+	.BackGd .signup , .Login{
+		position:absolute;		
+		top: 700px;
+		left:400px;
+		transform: translate(-50%,-50%);	
+		padding:15px;
+		color:#1dcaf5;
+		font-size:20px;		
+		background-color:transparent; 
+		border-radius:12px;
+		border-color:#11ebd9;
+		transition:0.5s;		
+		float:left;		
+		z-index:1;
+		font-family: Arial, Helvetica, sans-serif;
+		
+	}
+	.BackGd .signup:hover, .Login:hover{
+				
+		font-size:22px;
+		color:rgb(113, 234, 255);
+		font-weight:600;
+		font-variant-caps: petite-caps;
+		
+	}	
+
+	.BackGd .signup{
+		left:200px;
+		
+	}
+.nav-wrapper {
+    color: #15b1e0 !important;
+    font-size: 14px;
+    
+  }
+
+.cover-about{
+ 
+    margin-top: 10%;
+    margin: auto;
+    width: 85%;
+    
+    padding: 10px;  
+    
+    
+    }
+    
+    .para{
+      font-size: 25px;
+      font-family: Serif;
+      margin: 3%;
+    
+    }
+    
+    .para-head{
+      font-size: 50px;
+      margin-left: 35%;
+      margin-top: 3%;
+    
+    }
