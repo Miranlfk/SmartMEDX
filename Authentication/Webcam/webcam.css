@@ -1,0 +1,52 @@
+.app {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.app__container {
+	margin-top: 10px;
+	width: 500px;
+	height: 500px;
+	border: 1px solid #000;
+}
+
+.app__input {
+	margin-top: 10px;
+}
+
+.background-red {
+	background-color: red;
+  }
+  
+  .background-blue {
+	background-color: green;
+  }
+
+  .button {
+	border-radius: 8px;
+	font-size: 20px;
+	background-color: #040b36;
+	color: white;
+	/* margin-left: 70px;
+	margin-top: 100px; */
+	text-decoration: aliceblue;
+	text-align: center;
+	transition-duration: 0.4s;
+	padding: 15px;
+	align-items: center;
+	align-content: center;
+    margin-top: 15px;
+	}
+
+ .button:hover {
+		background-color: #277a6b;
+	}
+
+h1 {
+	font-family: "Times New Roman", Times, serif;
+	color: white;
+	text-decoration-color: aliceblue;
+	
+}

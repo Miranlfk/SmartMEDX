@@ -1,14 +1,21 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
+import './webcam.css';
+
+
+
+
 
 const WebcamCapture = () => {
     const WebcamRef = React.useRef(null);
     const videoConstraints ={
-        width : 200,
-        height : 300,
+        width : 3000,
+        height : 3000,
         facingMode : 'user'
     };
+
+    
     const [name, setName] = useState('')
     const capture = React.useCallback(
         () => {
@@ -29,16 +36,30 @@ const WebcamCapture = () => {
 
     return (
         <div>
-            <Webcam
+           <h1 align="center"  >Insurance Agent Verification</h1>
+
+            <Webcam 
+              id="webcam"
+              objectFit='contain'
+              objectPosition='center'
+              className="webcam"
               audio = {false}
-              height = {300}
+              height = {400}
               ref = {WebcamRef}
               screenshotFormat = 'image/jpeg'
-              width={350}
+              width={1550}
               videoConstraints = {videoConstraints}
+              
+              
             />
-            <button onClick={capture}>Verify</button>
+            
+
+<br>
+</br>
+           <center> <button   className="button" border="none"
+        color="green" height = "5000px"  width = "200px"  onClick={capture}>Verify</button></center>
             <h2>{name}</h2>
+            
         </div>
     );
 
@@ -47,3 +68,4 @@ const WebcamCapture = () => {
 }
 
 export default WebcamCapture;
+
