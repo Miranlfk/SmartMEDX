@@ -34,8 +34,8 @@ def test_adding_Record(healthrecords):
     test adding of record to the Records List
     """
     healthrecords.adding_Record("ID", "newfile", ".doc", 0, 34242)
-
-    assert healthrecords.records == healthrecords.records
+    recordlist = healthrecords.records
+    assert healthrecords.records == recordlist
     #assert healthrecords.fileName == "newfile"
     #assert healthrecords.fileType == ".doc"
     #assert healthrecords.Date == 0
@@ -45,7 +45,8 @@ def test_retrieve_Records(healthrecords):
     """
     test retrieval of record from the Records List
     """
-    assert healthrecords.records == healthrecords.records
+    recordlist = healthrecords.records
+    assert healthrecords.records == recordlist
     #assert healthrecords.Record.fileName == ""
     #assert healthrecords.Record.fileType == ""
     #assert healthrecords.Record.Date == 0
@@ -54,4 +55,5 @@ def test_getLength(healthrecords):
     """
     test retrieval of Records List Length
     """
-    assert healthrecords.records == healthrecords.records
+    recordlist = healthrecords.records
+    assert healthrecords.records == recordlist
