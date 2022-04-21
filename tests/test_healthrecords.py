@@ -29,7 +29,6 @@ def test_SignupPatient(healthrecords, chain):
 #    """
 #    assert healthrecords.records(accounts[0]) == ["", "", "", 0]
 
-
 def test_adding_Record(healthrecords):
     """
     test adding of record to the Records List
