@@ -11,7 +11,7 @@ def test_SignupPatient(healthrecords, chain):
     """
     test adding of new Patient to the PatientList
     """
-    healthrecords.SignupPatient("John", "Kennedy", 20202009, "President", "White House, Washington", "Depression")
+    healthrecords.SignupPatient("johnstuwart1@gmail.com","John", "Kennedy", 20202009, "President", "White House, Washington", "Depression")
     newlist = healthrecords.PatientList
     #assert healthrecords.PatientList(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00') == (["John", "Kennedy", 20202009, "President", "White House, Washington","Depression"])
     assert healthrecords.PatientList == newlist 
