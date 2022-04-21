@@ -89,6 +89,14 @@ contract Transactions is HealthRecords{
     function getPatientFunds() public view returns (uint) {
             return transaction.patientfunds;
     }
+
+    function setApprovedStatus(bool status) public{
+            approved = status;
+    }
+
+    function getApprovedStatus() public view returns (bool) {
+            return approved;
+    }
     
     //Function to add a Transaction into the TransactionList
     function addTransaction(bytes10 _PatientID, uint _date, string memory _surgeryName,  uint _claim, uint _sCost, uint _pCost, uint _funds)  public{
@@ -99,8 +107,8 @@ contract Transactions is HealthRecords{
     //Function to retrieve a Transaction from the TransactionList
     function retrieveTransaction(uint _id, bytes10 _PatientID) external view returns(uint, string memory, uint, uint, uint, uint){
             Patient memory patient = PatientList[_PatientID];
-            Transaction memory transaction = TransactionList[patient.accountNum][_id];
-           return (transaction.Date, transaction.surgeryName, transaction.claim, transaction.surgeryCost, transaction.patientPayment, transaction.patientfunds);
+            Transaction storage newtransaction = TransactionList[patient.accountNum][_id];
+           return (newtransaction.Date, newtransaction.surgeryName, newtransaction.claim, newtransaction.surgeryCost, newtransaction.patientPayment, newtransaction.patientfunds);
     }
     
     //Function to retrieve the Length of the TransactionList
@@ -113,7 +121,7 @@ contract Transactions is HealthRecords{
     function handleClaim() external {
             //first checks if claimable amount approved is greater than SurgeryCost then the Patient is approved
             if (getClaim() >= getSurgeryCost() ){
-                    approved = true;
+                    setApprovedStatus(true);
             }
             else {
                     //since Surgery Cost is gretaer the remainder is assigned as the charge from Patient

@@ -2,14 +2,14 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
-def setup(fn_isolation):
+def setup(module_isolation):
     """
     Isolation setup fixture.
     This ensures that each test runs against the same base environment.
     """
     pass
 
-@pytest.fixture(scope="module")
+@pytest.fixture()
 def transactions(accounts, Transactions):
     """
     Yield a `Contract` object for the Transactions contract.
@@ -17,7 +17,7 @@ def transactions(accounts, Transactions):
     yield accounts[0].deploy(Transactions)
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture()
 def healthrecords(accounts, HealthRecords):
     """
     Yield a `Contract` object for the HealthRecords contract.
