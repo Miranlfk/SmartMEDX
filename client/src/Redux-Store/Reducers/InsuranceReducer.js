@@ -2,8 +2,9 @@ const initState = {
     authError: null,
     isInsurance: false
 };
-
+//Initializing the Insurance Actions
 const InsuranceReducer = (state = initState, action) => {
+    
     switch (action.type) {
 
         case "CREATE_PATIENT_CLAIM":

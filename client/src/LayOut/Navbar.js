@@ -8,15 +8,19 @@ const Navbar = props => {
 
     const { auth, profile } = props;
     const links = auth.uid ? (
+        //showing when memeber succesfully logged in
         <SignedInLinks profile={profile} />
     ) : (
+        //showing when memeber succesfully logged Out
         <SignedOutLinks />
     );
     return (
-        <nav className="nav-wrapper blue darken-3">
-            <div className="container">
-                
-                {links}
+        <nav>
+            <div class="nav-wrapper black">
+                <a href="/" className="brand-logo blue-text darken-2" style={{left:"10px"}}>SmartMEDX</a>                
+                <ul class="right">
+                    <li>{links}</li>
+                </ul>
             </div>
         </nav>
     );

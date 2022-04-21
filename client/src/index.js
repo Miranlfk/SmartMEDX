@@ -13,6 +13,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 
 const store = createStore(rootReducer,
   compose(
+    //using redux thunk as a middlware 
     applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
     reduxFirestore(fbConfig),
     reactReduxFirebase(fbConfig, {

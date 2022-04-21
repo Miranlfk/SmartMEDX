@@ -11,21 +11,31 @@ import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../Redux-Store/Actions/MedicalActions";
 import { patient_signOut } from "../Redux-Store/Actions/PatientActions";
+import { insurance_signOut } from "../Redux-Store/Actions/InsuranceActions";
 
 
+//calling on navbar to show when logged in
 const SignedInLinks = (props) => {
     const { auth, auth_p, auth_i } = props;
     return (
         <div>
             <ul className="right">
+                {/* partitioning the transaction methods */}
                 {auth ?
                     <li>
-                        <NavLink to="/ADD">Add Patient</NavLink>
+                        <NavLink to="/ADD">Set Patient Cost</NavLink>
+                    </li>
+                    : null
+                }
+                 {auth_i ?
+                    <li>
+                        <NavLink to="/CLAIM">Add Claim</NavLink>
                     </li>
                     : null
                 }
                 <li>
-                    <a onClick={auth ? props.signOut : auth_p ? props.patient_signOut : null }><Link to={"/"}>Log Out</Link></a>
+                    {/* Triggering SignOut Options  */}
+                    <a onClick={auth ? props.signOut : auth_p ? props.patient_signOut :auth_i ? props.insurance_signOut : null }><Link to={"/"}>Log Out</Link></a>
                 </li>
                 <li>
                     <NavLink to="/AboutUs" >
@@ -58,9 +68,10 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
+        //Actions to signOut in every party
         signOut: () => dispatch(signOut()),
         patient_signOut: () => dispatch(patient_signOut()),
-        //insurance_signOut: () =>dispatch(insurance_signOut()),
+        insurance_signOut: () =>dispatch(insurance_signOut()),
     };
 };
 

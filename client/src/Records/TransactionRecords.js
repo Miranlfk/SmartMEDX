@@ -126,7 +126,7 @@ class TransactionRecords extends Component {
     // if (!auth.uid) return <Redirect to="/signin" />;
 
     HandleTransactions = async () => {
-        const { accounts, transactions, healthRecords } = this.state;
+        const { accounts, transactions } = this.state;
 
 
         let handleTrans = await transactions.handleClaim().call({ from: accounts[0] })
@@ -174,7 +174,7 @@ class TransactionRecords extends Component {
     getTransactions = async () => {
 
         const { patient } = this.props;
-        const { accounts, transactions, transactionslist } = this.state;
+        const { accounts, transactions } = this.state;
 
         const patientID = patient.patientID;
         console.log(patientID)

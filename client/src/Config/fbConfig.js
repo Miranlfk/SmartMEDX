@@ -1,5 +1,5 @@
 
-//specifying firebase API to console
+//initializing firebase API to console
 
 import firebase from "firebase/app";
 import "firebase/firestore";

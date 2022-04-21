@@ -1,15 +1,15 @@
 import React from "react";
 
 
-
+//to display panel of the Transaction Records
 const TransactionSummary = ({patient}) =>{
     return(
         <>
             <div class="center">
-                <div class="row" style={{ paddingLeft: "550px" }}>
-                    <div class="col s12 m8">
-                        <div class="card deep-orange accent-2" style={{ borderRadius: "12px" }}>
-                            <div class="card-image">
+                <div class="row" >
+                    <div class="col s12 m7">
+                        <div class="card-panel grey darken-4" style={{ borderRadius: "12px" }}>
+                            <div class="card-panel-image">
                                 <i class="large material-icons">
                                     history_toggle_off
                                 </i>

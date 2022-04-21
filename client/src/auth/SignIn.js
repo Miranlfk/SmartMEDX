@@ -85,16 +85,8 @@ class SignIn extends Component {
                   </div>
                 </div>
               </form>
-
             </Col>
-            
-
-
           </Row>
-
-
-        
-
       </>
     )
   }

@@ -4,6 +4,7 @@ import { CreateRecord } from "../Redux-Store/Actions/MedicalActions";
 import { Redirect } from "react-router-dom";
 
 class CreatePatientRecord extends Component {
+    //setting states according to the claiming specifications
     state = {
         patientID: "",
         CurrentMedication: "",
@@ -17,11 +18,12 @@ class CreatePatientRecord extends Component {
     };
     handleSubmit = e => {
         e.preventDefault();
-
+        //triggers the CreatePatientRecord Action
         this.props.CreatePatientRecord(this.state);
 
     };
     render() {
+        
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to="/SignIn" />;
         return (

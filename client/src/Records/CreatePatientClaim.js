@@ -4,9 +4,9 @@ import { Redirect } from "react-router-dom";
 import { CreateClaim } from "../Redux-Store/Actions/InsuranceActions";
 
 class CreatePatientClaim extends Component {
+    //setting states according to the claiming specifications
     state = {
-        patientID: "",
-        
+        patientID: "",        
         patientfunds: ""
     };
     handleChange = e => {
@@ -35,7 +35,7 @@ class CreatePatientClaim extends Component {
                             <label htmlFor="title">Patient ID</label>
                         </div>
                         <div>
-                            <button type="submit"  className="btn pink lighten-1 z-depth-0">Add Claim</button>
+                            <button type="submit"  className="btn #1b5e20  z-depth-1">Add Claim</button>
                             
                         </div>
 
@@ -54,6 +54,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        //create patient Calim action
         CreatePatientClaim: (record) => dispatch(CreateClaim(record))
     };
 };

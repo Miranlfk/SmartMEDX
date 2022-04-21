@@ -19,11 +19,12 @@ class Insurance_Dashboard extends Component {
   render() {
     const { insuranceMembers, auth } = this.props;
     if (!auth.uid) return <Redirect to="/Insurance_signIn" />;
-
+    
     return (
       <>
         {insuranceMembers && insuranceMembers.map(insurance => {
           if (auth.uid == insurance.id) {
+            // retrieving and displaying the sgned in person
             return (
               <div class="center">
                 <div class="card-panel hoverable">
@@ -35,7 +36,7 @@ class Insurance_Dashboard extends Component {
                       <h5>Name :{insurance.firstName} {insurance.lastName}</h5>
                       <h5>Address : {insurance.Address}</h5>
                       <h5>NIC : {insurance.NIC}</h5>
-                      <h5> Profession : {insurance.profession}</h5>
+                      <h5>Profession : {insurance.profession}</h5>
                     </div>
 
                   </div>
@@ -71,13 +72,11 @@ class Insurance_Dashboard extends Component {
                           </i>
 
                         </div>
+                        {/* Adding claim to a patient */}
                         <span class="card-title">ADD CLAIM</span>
                         <div class="card-content">
                           <Link to={"/ADDCLAIM"}><h5>Access Relevant Patient to add Claim</h5></Link>
-                          
-                          
                         </div>
-
                       </div>
                     </div>
                   </div>

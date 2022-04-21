@@ -3,7 +3,7 @@ const initState = {
     isMedical: false
 
 };
-
+//Initializing the Medical Actions
 const MedicalReducer = (state = initState, action) => {
     switch (action.type) {
         case "CREATE_RECORD":

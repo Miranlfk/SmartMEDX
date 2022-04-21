@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const SignedOutLinks = () => {
+    //calling on navbar to show when logged out
     return (
         <div>
             <ul className="right">

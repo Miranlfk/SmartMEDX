@@ -20,6 +20,7 @@ import login2 from '../images/login2.png';
 
 
 class SignUp extends Component {
+
     state = {
 
         email: "",
@@ -141,6 +142,7 @@ class SignUp extends Component {
 
 const mapStateToProps = state => {
     return {
+        //accessing the reducer to get authError which declared in InitState
         auth: state.firebase.auth,
         authError: state.Medical.authError
     };
@@ -148,6 +150,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        //dispatching the signUp action of a doctor
         signUp: newDoctor => dispatch(signUp(newDoctor))
     };
 };

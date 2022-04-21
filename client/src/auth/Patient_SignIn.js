@@ -17,7 +17,7 @@ import { AiFillFolderAdd } from "react-icons/ai";
 
 
 class Patient_SignIn extends Component {
-  state = {
+  state = {//stating the sign in auth attributes
     email: "",
     password: ""
   };
@@ -28,15 +28,13 @@ class Patient_SignIn extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.props.patient_signIn(this.state);
+    this.props.patient_signIn(this.state);// handling dispatching action through the properties
   };
   render() {
     const { Patients, authError, auth } = this.props;
     if (auth.uid) return <Redirect to="/Patient_dashboard" />;
     return (
-      <>
-        
-        
+      <>        
         <div className='button-container'>
 
           <div className='b1'>
@@ -94,19 +92,22 @@ class Patient_SignIn extends Component {
 
 const mapStateToProps = state => {
   return {
+    //accessing the reducer to get authError which declared in InitState
     authError: state.Patient.authError,
+     //accessing the firebase auth functionality
     auth: state.firebase.auth,
+     //accessing the fireStore to get Patients Collection
     Patients: state.firestore.ordered.Patients
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    patient_signIn: creds => dispatch(patient_signIn(creds))
+    patient_signIn: creds => dispatch(patient_signIn(creds))//dispatching the signIn Patient action 
   };
 };
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ collection: "Patients" }])
+  firestoreConnect([{ collection: "Patients" }])//connecting with firestore collection
 )(Patient_SignIn);

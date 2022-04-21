@@ -2,7 +2,7 @@ const initState = {
     authError: null,
     isPatient: false
 };
-
+//Initializing the Patient Actions
 const PatientReducer = (state = initState, action) => {
     switch (action.type) {
         case "PATIENT_LOGIN_ERROR":

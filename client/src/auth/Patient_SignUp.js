@@ -280,6 +280,7 @@ class Patient_SignUp extends Component {
 
 const mapStateToProps = state => {
     return {
+        //accessing the reducer to get authError,auth which declared in InitState
         auth: state.firebase.auth,
         authError: state.Patient.authError
     };

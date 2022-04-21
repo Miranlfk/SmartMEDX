@@ -5,7 +5,7 @@ import { combineReducers } from "redux";
 import { firebaseReducer } from "react-redux-firebase";
 import { firestoreReducer } from "redux-firestore";
 
-
+//Root Reducer to Combine all the Reducers
 const rootReducer = combineReducers({
     Patient: PatientReducer,
     Medical: MedicalReducer,

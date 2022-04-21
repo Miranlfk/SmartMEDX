@@ -13,326 +13,226 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Table } from 'reactstrap';
 import Moment from 'react-moment';
 
-import moment from "moment";
-
 
 const RecordDetails = (props) => {
 
-
+    //making use of UseState Hooks on functional component
     const [state1, setState1] = useState({
-
-        web3: null,
-        accounts: null,
-        chainid: null,
-
+  
+      web3: null,
+      accounts: null,
+      chainid: null,
+  
     })
     const [state2, setState2] = useState({
-
-        registration: null,
-        patient_name: null,
-        contact_number: 0,
-        Age: 0,
-        Career: null,
-        Address: null,
-        Email: null,
-        CurrentMedication: null,
-        patientID: 0,
-        regValue: null
-
+  
+      registration: null,
+      patient_name: null,
+      contact_number: 0,
+      Age: 0,
+      Career: null,
+      Address: null,
+      Email: null,
+      CurrentMedication: null,
+      patientID:0,
+      regValue: null
+  
     })
     const [state3, setState3] = useState({
-        claim: 0,
-        surgeryCost: 0,
-        patientPayment: 0,
-        patientfunds: 0,
-        transactions: null,
-        transactionslist: []// trasnaction state3
+      vyperInput: 0,
+      solidityInput: 0,
     })
     const [files, setfiles] = useState({
-        // healthStorage: null,
-        healthStorageNew: null,
-        healthRecords: []
-
+      // healthStorage: null,
+      healthStorage: null,
+      healthRecords: []
+  
     })
-
+  
     useEffect(() => {
-        Mounting()
-
-
+      Mounting()
+  
+  
     }, [])
-
+  
     useEffect(() => {
-
-        if (state1.web3 && state1.accounts && state1.chainid) {
-            loadInitialContracts()
-        } else {
-            console.log("Not Loaded")
-        }
-
+  
+      if (state1.web3 && state1.accounts && state1.chainid) {
+        loadInitialContracts()
+      } else {
+        console.log("Not Loaded")
+      }
+  
     }, [state1])
     const Mounting = async () => {
-
-        // Get network provider and web3 instance.
-        const web3 = await getWeb3()
-
-        // Try and enable accounts (connect metamask)
-        try {
-            const ethereum = await getEthereum()
-            ethereum.request({ method: 'eth_requestAccounts' });
-
-
-        } catch (e) {
-            console.log(`Could not enable accounts. Interaction with contracts not available.
-       Use a modern browser with a Web3 plugin to fix this issue.`)
-            console.log(e)
-        }
-
-        // Use web3 to get the user's accounts
-        const accounts = await web3.eth.getAccounts()
-
-        // Get the current chain id
-        const chainid = parseInt(await web3.eth.getChainId());
-
-
-
-        setState1({
-            web3,
-            accounts,
-            chainid,
-
-        }, loadInitialContracts);
-
+  
+      // Get network provider and web3 instance.
+      const web3 = await getWeb3()
+  
+      // Try and enable accounts (connect metamask)
+      try {
+        const ethereum = await getEthereum()
+        ethereum.request({ method: 'eth_requestAccounts' });
+  
+  
+      } catch (e) {
+        console.log(`Could not enable accounts. Interaction with contracts not available.
+         Use a modern browser with a Web3 plugin to fix this issue.`)
+        console.log(e)
+      }
+  
+      // Use web3 to get the user's accounts
+      const accounts = await web3.eth.getAccounts()
+  
+      // Get the current chain id
+      const chainid = parseInt(await web3.eth.getChainId());
+  
+  
+  
+      setState1({
+        web3,
+        accounts,
+        chainid,
+  
+      }, loadInitialContracts);
+  
     };
-
-
-    const { patient, medicalIdentity, patientIdentity, insuranceIdentity } = props;
-    // if (!auth.uid) return <Redirect to="/signin" />;
-
+  
+    //assigning the parsed props
+    const { patient, medicalIdentity ,patientIdentity } = props;
+    
     const loadInitialContracts = async () => {
-        // <=42 to exclude Kovan, <42 to include kovan
-
-        var _chainID = 0;
-        if (state1.chainid === 42) {
-            _chainID = 42;
-        }
-        if (state1.chainid === 1337) {
-            _chainID = "dev"
-        }
-        console.log(_chainID)
-        const registration = await loadContract(_chainID, "Registration")
-        const healthStorageNew = await loadContract(_chainID, "HealthRecordsNew")
-        const transactions = await loadContract(_chainID, "Transactions")
-        console.log(healthStorageNew)
-
-        if (!registration || !healthStorageNew || !transactions) {
-            return
-        }
-        const regValue = await registration.methods.patientIDGenerator().call();
-        await getFiles();
-        console.log(regValue)
-
-        setState2({
-            ...state2,
-            registration,
-            regValue,
-
-        })
-        setState3({
-            ...state3,
-            transactions,
-        })
-        setfiles({
-
-
-            ...files,
-            healthStorageNew,
-        })
+      
+      var _chainID = 0;
+     //connecting the ganache-cli chainID
+      if (state1.chainid === 1337) {
+        _chainID = "dev"
+      }
+      console.log(_chainID)
+     
+      //loading the Health Storage
+      const healthStorage = await loadContract(_chainID, "HealthRecords")    
+      console.log(healthStorage)
+  
+      if ( !healthStorage ) {
+        return
+      }
+      
+      await getFiles();
+      
+  
+      setState2({
+        ...state2,
+      })
+      setfiles({
+        ...files,
+        healthStorage,
+      })
     }
-
+  
     const loadContract = async (chain, contractName) => {
-        // Load a deployed contract instance into a web3 contract object
-        const { web3 } = state1
-
-        // Get the address of the most recent deployment from the deployment map
-        let address
-        try {
-            address = map[chain][contractName][0]
-
-        } catch (e) {
-            console.log(`Couldn't find any deployed contract "${contractName}" on the chain "${chain}".`)
-            return undefined
-        }
-
-        // Load the artifact with the specified address
-        let contractArtifact
-        try {
-            contractArtifact = await import(`../artifacts/deployments/${chain}/${address}.json`)
-        } catch (e) {
-            console.log(`Failed to load contract artifact "../artifacts/deployments/${chain}/${address}.json"`)
-            return undefined
-        }
-
-        return new web3.eth.Contract(contractArtifact.abi, address)
+      // Load a deployed contract instance into a web3 contract object
+      const { web3 } = state1
+  
+      // Get the address of the most recent deployment from the deployment map
+      let address
+      try {
+        address = map[chain][contractName][0]
+  
+      } catch (e) {
+        console.log(`Couldn't find any deployed contract "${contractName}" on the chain "${chain}".`)
+        return undefined
+      }
+  
+      // Load the artifact with the specified address
+      let contractArtifact
+      try {
+        contractArtifact = await import(`../artifacts/deployments/${chain}/${address}.json`)
+      } catch (e) {
+        console.log(`Failed to load contract artifact "../artifacts/deployments/${chain}/${address}.json"`)
+        return undefined
+      }
+  
+      return new web3.eth.Contract(contractArtifact.abi, address)
     }
-
-    // const { record, auth } = props;
-    // if (!auth.uid) return <Redirect to="/signin" />;
+  
+    //Retrieving Health Records from the IPFS Storage
     const getFiles = async () => {
-        //TODO
-        try {
-
-            const { accounts } = state1;
-            const { healthStorageNew } = files;
-            const { registration } = state2;
-
-            if (patient || patientIdentity) {
-
-                const patientID = (patient.patientID);
-                console.log(patientID)
-
-                const _account = await registration.methods.patientIdentity(patientID).call({ from: accounts[0] });
-                console.log(_account)
-                let accountSet = await healthStorageNew.methods.accountSet("0x0129D91C98121A89EedbC98203F0292191EeDC22").call({ from: accounts[0] });
-                console.log(accountSet)
-                let settedAccount = await healthStorageNew.methods.accountRetriever().call({ from: accounts[0] });
-                console.log(settedAccount)
-            }
-            let filesLength = await healthStorageNew.methods.getLength().call({ from: accounts[0] });
-            let filesstore = []
-
-            for (let i = 0; i < filesLength; i++) {
-                let file = await healthStorageNew.methods.retrieve_Records(i).call({ from: accounts[0] });
-                filesstore.push(file);
-            }
-            setfiles({ healthRecords: filesstore });
-
-        } catch (error) {
-            console.log(error);
+      
+      try {
+  
+        const { accounts } = state1;
+        const { healthStorage } = files;
+       
+        
+        const patientID=(patient.patientID) ;
+          console.log(patientID)
+        //validating the patient accessability 
+        if(patient||patientIdentity){
+          //assigning the patient ID to recognize 
+          const patientID=(patient.patientID) ;
+          console.log(patientID)
+          
         }
-
+        //accessing the smart contract functions to retrieve the length
+        let filesLength = await healthStorage.methods.getLength(patientID).call({ from: accounts[0] });
+        let filesstore = []
+        //Iterating to Store files in a local array to showcase on page
+        for (let i = 0; i < filesLength; i++) {
+          const patientID=(patient.patientID) ;
+          console.log(patientID)
+          let file = await healthStorage.methods.retrieve_Records(i,patientID).call({ from: accounts[0] });
+          filesstore.push(file);
+        }
+        //updating up the state
+        setfiles({ healthRecords: filesstore });
+  
+      } catch (error) {
+        console.log(error);
+      }
+  
     };
-
-
+  
+  //onDrop to add files to upload
     const onDrop = async (file) => {
-        try {
-
-            const { accounts } = state1;
-            const { healthStorageNew } = files;
-            const { registration } = state2
-
-
-            const client = create('https://ipfs.infura.io:5001/api/v0');
-
-            // const result = await ipfs.add(stream);
-
-            //const added = await client.add(file);
-            let added = await client.add({
-                path: `Diagnosis/${file.name}`,
-                content: file
-            }, { wrapWithDirectory: true })
-            console.log(added);
-            let v1CID = added.cid.toV1();
-            const url2 = `https://${v1CID}.ipfs.dweb.link`
-            console.log(url2);
-
-
-            const timeStamp = Math.round(+ new Date() / 1000);
-            const type = file.name.substr(file.name.lastIndexOf("." + 1));
-
-            const patientID = patient.patientID;
-            console.log(patientID)
-            let _account = await registration.methods.patientIdentity(patientID).call({ from: accounts[0] });
-            let accountSet = await healthStorageNew.methods.accountSet(_account).call({ from: accounts[0] });
-            console.log(_account);
-            console.log(accountSet);
-
-            let uploaded = healthStorageNew.methods.adding_Record(url2, file.name, type, timeStamp).send({ from: accounts[0] });
-            console.log(uploaded);
-            loadInitialContracts();
-            await getFiles();
-            //const url = `https://ipfs.infura.io/ipfs/${added.path}`
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const HandleTransactions = async () => {
+      try {
+              
         const { accounts } = state1;
-        const { transactions } = state3;
-
-
-        let handleTrans = await transactions.handleClaim().call({ from: accounts[0] })
-        console.log(handleTrans);
-    }
-
-    const setTransactionDetails = async () => {
-        try {
-
-            const { accounts } = state1;
-            const { registration } = state2;
-            const { transactions, surgeryCost, claim, patientPayment, patientfunds, transactionslist } = state3;
-
-            if (patient || patientIdentity) {
-
-                const patientID = patient.patientID;
-                console.log(patientID)
-                let _account = await registration.methods.patientIdentity(patientID).call({ from: accounts[0] });
-                console.log(_account);
-                let patientfund = await transactions.methods.setPatientFunds(patientfund).call({ from: accounts[0] });
-                console.log(patientfund);
-
-            } else if (medicalIdentity) {
-
-
-
-                let surgeryCost = await transactions.methods.setSurgeryCost(surgeryCost).call({ from: accounts[0] });
-                console.log(surgeryCost);
-
-            } else if (insuranceIdentity) {
-
-                let claim = await transactions.methods.setClaim(claim).call({ from: accounts[0] });
-                console.log(claim);
-
-            } else {
-                console.log("Invalid User")
-            }
-
-
-            let trans = transactions.methods.addTransaction(claim, surgeryCost, patientPayment, patientfunds).send({ from: accounts[0] });
-            console.log(trans);
-
-
-        }
-        catch (error) {
-            console.log(error);
-
-        }
+        const { healthStorage } = files;
+        
+        //creating the ipfs public-infura gateway to add files on 
+        const client = create('https://ipfs.infura.io:5001/api/v0');
+      
+        //adding the files in a specified path
+        let added = await client.add({
+          path: `Diagnosis/${file.name}`,
+          content: file
+        }, { wrapWithDirectory: true })
+        console.log(added);
+        //remaking the CID to v1cid version
+        let v1CID = added.cid.toV1();
+        //generating  the url to access the 
+        const url = `https://${v1CID}.ipfs.dweb.link`
+        console.log(url);
+  
+        //creating the timestamp and type to display
+        const timeStamp = Math.round(+ new Date() / 1000);
+        const type = file.name.substr(file.name.lastIndexOf("." + 1));
+        
+        const patientID=patient.patientID ;
+        console.log(patientID)
+        
+        //accessing to the smart contract functions
+        let uploaded = healthStorage.methods.adding_Record(url, file.name, type, timeStamp, patientID).send({ from: accounts[0] });
+        console.log(uploaded);
+        loadInitialContracts();
+        await getFiles();
+        
+  
+      } catch (error) {
+        console.log(error);
+      }
     };
-    const getTransactions = async () => {
-
-        const { accounts } = state1;
-        const { transactions, transactionslist } = state3;
-
-
-
-        let TransactionListLen = await transactions.methods.getLength().call({ from: accounts[0] });
-        console.log(TransactionListLen)
-        let Transactions = [];
-
-
-        for (let i = 0; i < TransactionListLen; i++) {
-
-            let trans = await transactions.methods.getTransaction().call({ from: accounts[0] });
-
-            Transactions.push(trans);
-        }
-        setState3({ transactionslist: Transactions });
-
-
-    }
-
-
 
     const {
         healthRecords
@@ -340,7 +240,7 @@ const RecordDetails = (props) => {
     const isAccountsUnlocked = state1.accounts ? state1.accounts.length > 0 : false
 
 
-    if (patient || medicalIdentity || insuranceIdentity) {
+    if (patient || medicalIdentity ) {
         console.log(patient.firstName)
         return (
             <div>
@@ -348,7 +248,7 @@ const RecordDetails = (props) => {
                     <div>Loading Web3, accounts, and contracts...</div>
 
                 }
-                {(isNaN(state1.chainid) || state1.chainid < 42) &&
+                {(isNaN(state1.chainid)) &&
                     <div>Wrong Network! Switch to your local RPC "Localhost: 8545" in your Web3 provider (e.g. Metamask)</div>
                 }
                 <div className="center">
@@ -358,10 +258,7 @@ const RecordDetails = (props) => {
                             <h5>{patient.patientID}</h5>
                             <h5>{patient.CurrentMedication}</h5>
                         </div>
-                        {/* <div className="card-action grey lighten-4 grey-text">
-
-                            <div>{moment(patient.createdAt.toDate()).calendar()}</div>
-                        </div> */}
+                        
                     </div>
                 </div>
                 {
@@ -387,6 +284,7 @@ const RecordDetails = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
+                                {/* mapping the health Records to showcase */}
                                 {healthRecords !== [] ? healthRecords.map((item, key) => (
                                     <tr>
                                         <th><FileIcon size={35} extension={item[2]} {...defaultStyles[item[2]]} /></th>
@@ -400,19 +298,7 @@ const RecordDetails = (props) => {
                         </Table>
                     </div>
                 </div>
-                <div className="Transaction">
-                    {/* <div>
-                        {medicalIdentity ?
-                            <TransactionRecords patient={patient} /> : null
-                        }
-
-
-
-                    </div> */}
-
-
-
-                </div>
+                
             </div>
         );
     } else {
@@ -423,7 +309,7 @@ const RecordDetails = (props) => {
         );
     }
 };
-
+//mapping states to props , derives from Reducers
 const mapStateToProps = (state, ownedProps) => {
     console.log(state);
     const id = ownedProps.match.params.id;
@@ -434,6 +320,7 @@ const mapStateToProps = (state, ownedProps) => {
 
         patient: patient,
         auth: state.firebase.auth,
+        //access verification
         medicalIdentity: state.Medical.isMedical,
         patientIdentity: state.Patient.isPatient,
         insuranceIdentity: state.Insurance.isInsurance
@@ -443,6 +330,7 @@ const mapStateToProps = (state, ownedProps) => {
 
 export default compose(
     connect(mapStateToProps),
+    //connecting to the patients collection
     firestoreConnect([
         {
             collection: "Patients"
