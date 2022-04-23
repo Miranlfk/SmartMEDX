@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
@@ -155,7 +155,7 @@ class TransactionRecords extends Component {
             let _surgeryCost = patient.SurgeryCost;
             let _patientfunds = patient.patientfunds;
 
-            let trans = transactions.methods.addTransaction(patientID, timeStamp, SurgeryName, claimAmount,_surgeryCost, patientPayment, _patientfunds).send({ from: accounts[0] });
+            let trans = transactions.methods.addTransaction(patientID, timeStamp, SurgeryName, claimAmount, _surgeryCost, patientPayment, _patientfunds).send({ from: accounts[0] });
             console.log(trans);
 
         }
@@ -237,23 +237,23 @@ class TransactionRecords extends Component {
                     <div className="Transaction">
                         <div>
 
-                            {/* {patientIdentity ? */}
-                            <form className="white" onSubmit={this.setTransactionDetails}>
-                                <h5 className="grey-text text-darken-3">Add claim Amount</h5>
-                                <div className="input-field">
-                                    <input type="text" id="claimAmount" onChange={this.handleChange} />
-                                    <label htmlFor="title">Current Medication</label>
-                                </div>
-                                <div>
-                                    <button type="submit" disabled={!isAccountsUnlocked} className="btn pink lighten-1 z-depth-0">Settle the Claim</button>
-                                    <div className="center red-text">
-                                        {authError ? <p>{authError}</p> : null}
+                            {patientIdentity ?
+                                <form className="white" onSubmit={this.setTransactionDetails}>
+                                    <h5 className="grey-text text-darken-3">Add claim Amount</h5>
+                                    <div className="input-field">
+                                        <input type="text" id="claimAmount" onChange={this.handleChange} />
+                                        <label htmlFor="title">Current Medication</label>
                                     </div>
-                                </div>
+                                    <div>
+                                        <button type="submit" disabled={!isAccountsUnlocked} className="btn pink lighten-1 z-depth-0">Settle the Claim</button>
+                                        <div className="center red-text">
+                                            {authError ? <p>{authError}</p> : null}
+                                        </div>
+                                    </div>
 
-                            </form>
-                            : null
-
+                                </form>
+                                : null
+                            }
                         </div>
                         <div class="highlight">
                             <h4>Transaction History</h4>
