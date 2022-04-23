@@ -14,10 +14,10 @@ const SignedOutLinks = () => {
                 </li>
 
                 <li>
-                    <NavLink to="/Patient_signIn">About US</NavLink>
+                    <NavLink to="/AboutUs">About US</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/P_SignUp">Contact Us</NavLink>
+                    <NavLink to="/ContactUs">Contact Us</NavLink>
                 </li>
             </ul>
         </div>

@@ -19,8 +19,8 @@ import TransactionRecords from "./Records/TransactionRecords";
 import TransactionSummary from "./Records/TransactionSummary";
 import Home from "./HomePage/pages";
 import CreatePatientClaim from "./Records/CreatePatientClaim";
-
-
+import AboutPage from "./LayOut/AboutPage";
+import ContactUs from "./LayOut/ContactUs";
 const App = () => {
     //Requiring All the pages to navigate   
     return (
@@ -46,7 +46,9 @@ const App = () => {
                         <Route path="/CLAIM" component={CreatePatientClaim} />
                         <Route path="/Search" component={Patient_Search} />
                         <Route path="/transaction/:id" component={TransactionRecords} />
-                        <Route path="/TransSummary" component={TransactionSummary} />                        
+                        <Route path="/TransSummary" component={TransactionSummary} />   
+                         <Route path="/AboutUs" component={AboutPage} /> 
+                         <Route path="/ContactUs" component={ContactUs} />                  
                     </Switch>
                 </BrowserRouter>
                
