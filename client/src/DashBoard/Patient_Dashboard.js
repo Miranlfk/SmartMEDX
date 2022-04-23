@@ -31,7 +31,7 @@ class Patient_Dashboard extends Component {
                         <span class="card-panel-title" ><h3> Hello {patient.firstName}!!!</h3></span>
                         <h5>Name :{patient.firstName} {patient.lastName}</h5>
                         <h5>Address : {patient.Address}</h5>
-                        <h5>NIC : {patient.NIC}</h5>
+                        <h5>Patient ID : {patient.patientID}</h5>
                         <h5>Current Medication : {patient.CurrentMedication}</h5>
                       </div>
                     </div>

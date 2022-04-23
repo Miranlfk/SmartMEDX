@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CreateRecord } from "../Redux-Store/Actions/MedicalActions";
 import { Redirect } from "react-router-dom";
+import { NotifyInsurance } from "../Redux-Store/Actions/MedicalActions";
 
 class CreatePatientRecord extends Component {
     //setting states according to the claiming specifications
@@ -9,7 +10,7 @@ class CreatePatientRecord extends Component {
         patientID: "",
         CurrentMedication: "",
         SurgeryCost: "",
-
+        InsuranceID:""
     };
     handleChange = e => {
         this.setState({
@@ -20,10 +21,10 @@ class CreatePatientRecord extends Component {
         e.preventDefault();
         //triggers the CreatePatientRecord Action
         this.props.CreatePatientRecord(this.state);
-
+        this.props.NotifyInsurance(this.state);
     };
     render() {
-        
+
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to="/SignIn" />;
         return (
@@ -47,7 +48,11 @@ class CreatePatientRecord extends Component {
                         <label htmlFor="title">PatientID</label>
                     </div>
                     <div className="input-field">
-                        <button className="btn pink lighten-1">ADD</button>
+                        <input type="text" id="InsuranceID" onChange={this.handleChange} />
+                        <label htmlFor="title">Insurance ID</label>
+                    </div>
+                    <div className="input-field">
+                        <button className="btn blue">ADD</button>
                     </div>
                 </form>
             </div>
@@ -63,7 +68,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        CreatePatientRecord: (record) => dispatch(CreateRecord(record))
+        CreatePatientRecord: (record) => dispatch(CreateRecord(record)),
+        NotifyInsurance:(record) => dispatch(NotifyInsurance(record))
     };
 };
 

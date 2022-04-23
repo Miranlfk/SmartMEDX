@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { CreateClaim } from "../Redux-Store/Actions/InsuranceActions";
 
+
 class CreatePatientClaim extends Component {
     //setting states according to the claiming specifications
     state = {
         patientID: "",        
-        patientfunds: ""
+        patientfunds: "",
+        
     };
     handleChange = e => {
         this.setState({
@@ -17,6 +19,7 @@ class CreatePatientClaim extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.CreatePatientClaim(this.state);
+        
     };
     render() {
         const { auth } = this.props;
@@ -30,13 +33,14 @@ class CreatePatientClaim extends Component {
                         <div className="input-field">
                             <input type="text" id="patientfunds" onChange={this.handleChange} />
                             <label htmlFor="title">Patient Funds</label>
-                        </div><div className="input-field">
+                        </div>
+                        <div className="input-field">
                             <input type="text" id="patientID" onChange={this.handleChange} />
                             <label htmlFor="title">Patient ID</label>
                         </div>
+                       
                         <div>
-                            <button type="submit"  className="btn #1b5e20  z-depth-1">Add Claim</button>
-                            
+                            <button type="submit"  className="btn blue z-depth-1">Add Claim</button>                            
                         </div>
 
                     </form>
@@ -56,6 +60,7 @@ const mapDispatchToProps = dispatch => {
     return {
         //create patient Calim action
         CreatePatientClaim: (record) => dispatch(CreateClaim(record))
+       
     };
 };
 

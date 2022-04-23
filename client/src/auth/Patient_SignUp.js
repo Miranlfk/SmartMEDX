@@ -36,7 +36,7 @@ class Patient_SignUp extends Component {
         Career: "",
         Address: "",
         CurrentMedication: "",
-        
+
 
         patientID: "",
 
@@ -85,7 +85,7 @@ class Patient_SignUp extends Component {
     loadInitialContracts = async () => {
 
         var _chainID = 0;
-       //connecting to ganache development Server with its chain ID
+        //connecting to ganache development Server with its chain ID
         if (this.state.chainid === 1337) {
             _chainID = "dev"
         }
@@ -97,10 +97,10 @@ class Patient_SignUp extends Component {
         if (!healthStorage) {
             return
         }
-       
+
         this.setState({
             healthStorage,
-            
+
         })
     }
 
@@ -169,7 +169,7 @@ class Patient_SignUp extends Component {
     render() {
         const {
             web3, accounts,
-           
+
         } = this.state
 
         if (!web3) {
@@ -220,42 +220,43 @@ class Patient_SignUp extends Component {
 
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='email' id="email" placeholder='Enter email' onChange={this.handleChange} />
+                                        <Form.Control type='email' id="email" placeholder='Enter email' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicPassword'>
-                                        <Form.Control type='text' id="password" placeholder='Password' onChange={this.handleChange}/>
+                                        <Form.Control type='text' id="password" placeholder='Password' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="firstName" placeholder='First Name' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="firstName" placeholder='First Name' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="lastName" placeholder='Last Name' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="lastName" placeholder='Last Name' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="nic" placeholder='Nic Number' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="nic" placeholder='Nic Number' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="Career" placeholder='Career' onChange={this.handleChange}/>
-                                    </Form.Group>
-                                    
-                                    <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="Address" placeholder='Address' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="Career" placeholder='Career' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="CurrentMedication" placeholder='Current medication' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="Address" placeholder='Address' required onChange={this.handleChange} />
                                     </Form.Group>
 
-                                                                      
+                                    <Form.Group className='mb-3' controlId='formBasicEmail'>
+                                        <Form.Control type='text' id="CurrentMedication" placeholder='Current medication' required onChange={this.handleChange} />
+                                    </Form.Group>
+
+
 
                                     <div className="input-field">
-                                        <button onClick={this.contractsubmit} className="btn pink lighten-1 z-depth-0">IDGEN</button>
-                                        <button type="submit" disabled={!isAccountsUnlocked} className="btn pink lighten-1 z-depth-0">Sign Up</button>
+                                        <button onClick={this.contractsubmit} className="btn blue z-depth-1">IDGEN</button>
+
+                                        <button type="submit" disabled={!isAccountsUnlocked} className="btn blue z-depth-1">Sign Up</button>
                                         <div className="center red-text">
                                             {authError ? <p>{authError}</p> : null}
                                         </div>
@@ -267,10 +268,9 @@ class Patient_SignUp extends Component {
                                 <img className='cover-1' src={PatientCover} alt='' />
                             </Col>
                         </Row>
-
                     </Container>
                 </div>
-
+                
             </>
 
         );

@@ -1,17 +1,8 @@
-// import './DashBoardStyles.css';
-// import { IoIosPerson } from "react-icons/io";
-// import { ImProfile } from "react-icons/im";
-// import { CgToday } from "react-icons/cg";
-// import 'bootstrap/dist/css/bootstrap.css';
-
 import React, { Component } from "react";
-
-import RecordDetails from "../Records/RecordDetails";
-import RecordList from "../Records/RecordList";
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, NavLink, Redirect } from 'react-router-dom';
 import Patient_Search from "../Search/Patient_Search";
 
 
@@ -28,13 +19,13 @@ class Insurance_Dashboard extends Component {
             return (
               <div class="center">
                 <div class="card-panel hoverable">
-                  <img class="rounded-circle z-depth-2" alt="100x100" src="https://i.pravatar.cc/300?img=5"
+                  <img class="rounded-circle z-depth-2" alt="100x100" src="https://i.pravatar.cc/300?img=68"
                     data-holder-rendered="true"></img>
                   <div class="card-panel blue darken-2">
                     <div class="card-panel-content white-text">
                       <span class="card-panel-title" ><h3> Welcome Mr.{insurance.firstName}</h3></span>
                       <h5>Name :{insurance.firstName} {insurance.lastName}</h5>
-                      <h5>Address : {insurance.Address}</h5>
+                      <h5>Insurance Company : {insurance.InsuranceCompany}</h5>
                       <h5>NIC : {insurance.NIC}</h5>
                       <h5>Profession : {insurance.profession}</h5>
                     </div>
@@ -45,7 +36,29 @@ class Insurance_Dashboard extends Component {
                 <div class="center">
                   <div class="row">
                     <div class="col s12 m8">
-                      <div class="card-panel deep-orange accent-2" >
+                      <div class="card-panel  " >
+                        <div class="card-image">
+                          <i class="large material-icons">
+                          attach_money
+                          </i>
+
+                        </div>
+                        {/* Adding claim to a patient */}
+                        <span class="card-title">Current Patient Info</span>
+                        <div class="card-content">
+                        <h5> Current Patient ID :{insurance.patientID}</h5>
+                        <h5> Surgery Cost : {insurance.SurgeryCost} </h5>
+                        <NavLink to="/CLAIM"><button className="btn blue">Add Claim</button></NavLink>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="center">
+                  <div class="row">
+                    <div class="col s12 m8">
+                      <div class="card-panel teal darken-1" >
                         <div class="card-image">
                           <i class="large material-icons">
                             person_search
@@ -62,25 +75,7 @@ class Insurance_Dashboard extends Component {
                     </div>
                   </div>
                 </div>
-                <div class="center">
-                  <div class="row">
-                    <div class="col s12 m8">
-                      <div class="card-panel deep-yellow accent-2" >
-                        <div class="card-image">
-                          <i class="large material-icons">
-                          attach_money
-                          </i>
-
-                        </div>
-                        {/* Adding claim to a patient */}
-                        <span class="card-title">ADD CLAIM</span>
-                        <div class="card-content">
-                          <Link to={"/ADDCLAIM"}><h5>Access Relevant Patient to add Claim</h5></Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
 
               </div>
             )

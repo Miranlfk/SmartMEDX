@@ -8,7 +8,7 @@ const TransactionSummary = ({patient}) =>{
             <div class="center">
                 <div class="row" >
                     <div class="col s12 m7">
-                        <div class="card-panel grey darken-4" style={{ borderRadius: "12px" }}>
+                        <div class="card-panel teal darken-4" style={{ borderRadius: "12px" }}>
                             <div class="card-panel-image">
                                 <i class="large material-icons">
                                     history_toggle_off

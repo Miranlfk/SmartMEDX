@@ -88,7 +88,7 @@ class Insurance_SignIn extends Component {
                   <input type="password" id="password" onChange={this.handleChange} />
                 </div>
                 <div className="input-field">
-                  <button className="btn pink lighten-1 z-depth-0">Login</button>
+                  <button className="btn indigo darken-4 z-depth-1">Login</button>
                   <div className="center red-text">
                     {/* displaying authentication error if some error triggers */}
                     {authError ? <p>{authError}</p> : null}

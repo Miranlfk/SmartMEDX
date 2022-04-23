@@ -38,10 +38,7 @@ const RecordDetails = (props) => {
       regValue: null
   
     })
-    const [state3, setState3] = useState({
-      vyperInput: 0,
-      solidityInput: 0,
-    })
+   
     const [files, setfiles] = useState({
       // healthStorage: null,
       healthStorage: null,
@@ -252,11 +249,11 @@ const RecordDetails = (props) => {
                     <div>Wrong Network! Switch to your local RPC "Localhost: 8545" in your Web3 provider (e.g. Metamask)</div>
                 }
                 <div className="center">
-                    <div className="card-panel deep-orange accent-3 z-depth-0">
+                    <div className="card-panel teal darken-1 z-depth-1">
                         <div className="card-content">
-                            <h4 className="card-title">Patient :{patient.firstName}</h4>
-                            <h5>{patient.patientID}</h5>
-                            <h5>{patient.CurrentMedication}</h5>
+                            <h4 className="card-title">Patient Name:{patient.firstName}</h4>
+                            <h5>Patient ID     :{patient.patientID}</h5>
+                            <h5>Patient Status :{patient.CurrentMedication}</h5>
                         </div>
                         
                     </div>
@@ -274,7 +271,7 @@ const RecordDetails = (props) => {
                             <StyledDropZone onDrop={onDrop} /> : null
                         }
 
-                        <button className="btn deep-orange z-depth-1" onClick={getFiles}>Show Files</button>
+                        <button className="btn teal lighten-2 z-depth-1" onClick={getFiles}>Show Files</button>
                         <Table>
                             <thead>
                                 <tr>

@@ -2,13 +2,32 @@ export const CreateRecord = (record) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         //getting into firestore
         const firestore = getFirestore();
-        const authorId = getState().firebase.auth.uid;
+        const doctorID = getState().firebase.auth.uid;
         firestore.collection('Patients').doc(record.patientID).update({
             ...record,
             CurrentMedication: record.CurrentMedication,
             SurgeryCost: record.SurgeryCost,
-            authorId: authorId,
+            DoctorID: doctorID,
             updatedAt: new Date()
+
+        }).then(() => {//dispatching the relevant Medical actinon types
+            dispatch({ type: 'CREATE_RECORD', record });
+        }).catch((err) => {//handling Errors
+            dispatch({ type: 'CREATE_RECORD_ERROR', err })
+        })
+    }
+}
+export const NotifyInsurance= (record) =>{
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        //getting into firestore
+        const firestore = getFirestore();
+        const DoctorID = getState().firebase.auth.uid;
+        firestore.collection('Insurance').doc(record.InsuranceID).update({
+            ...record,
+            AssignedPatient: record.patientID,
+            SurgeryCost: record.SurgeryCost,
+            DoctorID: DoctorID,
+            updatedAt: new Date() +"by Medical Team"
 
         }).then(() => {//dispatching the relevant Medical actinon types
             dispatch({ type: 'CREATE_RECORD', record });

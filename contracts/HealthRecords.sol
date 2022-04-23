@@ -11,11 +11,11 @@ contract HealthRecords{
     struct Patient{
 
         string Email;
-        string firstName;       
-        string lastName; 
-        uint NIC;        
+        string firstName;
+        string lastName;
+        uint NIC;
         string Career;
-        string Address;        
+        string Address;
         string CurrentMedication;
         address accountNum;
 

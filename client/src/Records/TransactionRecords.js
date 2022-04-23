@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component} from "react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
@@ -7,7 +7,7 @@ import { getEthereum } from "../getEthereum";
 import map from "../artifacts/deployments/map.json";
 import { CreateClaim } from "../Redux-Store/Actions/InsuranceActions";
 import "bootstrap/dist/css/bootstrap.css";
-import Form from 'react-bootstrap/Form';
+import Moment from 'react-moment';
 
 
 class TransactionRecords extends Component {
@@ -81,16 +81,10 @@ class TransactionRecords extends Component {
         if (!transactions || !healthRecords) {
             return
         }
-        //this.setState(this.getFiles());
-        //const regValue = await registration.methods.patientIDGenerator().call();
-        //const simpleValue = await simpleStorage.methods.get().call()
 
         this.setState({
             transactions,
             healthRecords
-
-
-            // simpleValue,
         })
     }
 
@@ -140,28 +134,28 @@ class TransactionRecords extends Component {
             const { patient } = this.props;
             const { accounts, healthRecords, transactions, surgeryCost, claimAmount, patientPayment, patientfunds } = this.state;
 
-
-
             const patientID = patient.patientID;
             console.log(patientID)
             let _account = await healthRecords.methods.patientIdentity(patientID).call({ from: accounts[0] });
             console.log(_account);
             let patientfund = await transactions.methods.setPatientFunds(patient.patientfunds).call({ from: accounts[0] });
             console.log(patientfund);
-            
-            let date = await transactions.methods.setDate(patient.Date).call({ from: accounts[0] });
-            console.log(date);
 
-            let surgeryName = await transactions.methods.setSurgeryName(patient.surgeryName).call({ from: accounts[0] });
-            console.log(surgeryName);
+            await transactions.methods.setSurgeryCost(patient.SurgeryCost).call({ from: accounts[0] });
 
-            this.surgeryCost = await transactions.methods.setSurgeryCost(patient.SurgeryCost).call({ from: accounts[0] });
-            console.log(this.surgeryCost);
 
-            this.claimAmount = await transactions.methods.setClaim(claimAmount).call({ from: accounts[0] });
-            console.log(this.claimAmount);
+            await transactions.methods.setClaim(claimAmount).call({ from: accounts[0] });
 
-            let trans = transactions.methods.addTransaction( patientID, date, surgeryName, claimAmount, surgeryCost, patientPayment, patientfunds).send({ from: accounts[0] });
+
+            let timeStamp = Math.round(+ new Date() / 1000);
+            console.log(timeStamp)
+            await transactions.methods.setDate(timeStamp).call({ from: accounts[0] });
+
+            const SurgeryName = patient.CurrentMedication;
+            let _surgeryCost = patient.SurgeryCost;
+            let _patientfunds = patient.patientfunds;
+
+            let trans = transactions.methods.addTransaction(patientID, timeStamp, SurgeryName, claimAmount,_surgeryCost, patientPayment, _patientfunds).send({ from: accounts[0] });
             console.log(trans);
 
         }
@@ -183,35 +177,21 @@ class TransactionRecords extends Component {
         let Transactions = [];
 
         for (let i = 0; i < TransactionListLen; i++) {
-
             let trans = await transactions.methods.retrieveTransaction(i, patientID).call({ from: accounts[0] });
             Transactions.push(trans);
         }
         this.setState({ transactionslist: Transactions });
     }
 
-    handleChange = (e) => {
+    handleChange = e => {
         this.setState({
             [e.target.id]: e.target.value
         });
     };
     handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.patient_signUp(this.state);
+        this.setTransactionDetails();
     };
-    insuranceHandleSubmit = e => {
-        const { patient } = this.props;
-        const patientID = patient.patientID;
-        console.log(patientID)
-        e.preventDefault();
-        this.props.TransactionRecords(this.state2);
 
-    }
-    insuranceHandleChange = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value
-        });
-    }
 
 
     render() {
@@ -243,10 +223,7 @@ class TransactionRecords extends Component {
                                 <h5>Surgery Cost :{patient.SurgeryCost}</h5>
                                 {/* <h5>Last Updated :{patient.updatedAt}</h5> */}
                             </div>
-                            {/* <div className="card-action grey lighten-4 grey-text">
 
-                            <div>{moment(patient.createdAt.toDate()).calendar()}</div>
-                        </div> */}
                         </div>
                     </div>
                     {
@@ -260,23 +237,23 @@ class TransactionRecords extends Component {
                     <div className="Transaction">
                         <div>
 
-                            {patientIdentity ?
-                                <form className="white" onSubmit={this.setTransactionDetails}>
-                                    <h5 className="grey-text text-darken-3">Add claim Amount</h5>
-                                    <div className="input-field">
-                                        <input type="text" id="claimAmount" onChange={this.handleChange} />
-                                        <label htmlFor="title">Current Medication</label>
+                            {/* {patientIdentity ? */}
+                            <form className="white" onSubmit={this.setTransactionDetails}>
+                                <h5 className="grey-text text-darken-3">Add claim Amount</h5>
+                                <div className="input-field">
+                                    <input type="text" id="claimAmount" onChange={this.handleChange} />
+                                    <label htmlFor="title">Current Medication</label>
+                                </div>
+                                <div>
+                                    <button type="submit" disabled={!isAccountsUnlocked} className="btn pink lighten-1 z-depth-0">Settle the Claim</button>
+                                    <div className="center red-text">
+                                        {authError ? <p>{authError}</p> : null}
                                     </div>
-                                    <div>
-                                        <button type="submit" disabled={!isAccountsUnlocked} className="btn pink lighten-1 z-depth-0">Settle the Claim</button>
-                                        <div className="center red-text">
-                                            {authError ? <p>{authError}</p> : null}
-                                        </div>
-                                    </div>
+                                </div>
 
-                                </form>
-                                : null
-                            }
+                            </form>
+                            : null
+
                         </div>
                         <div class="highlight">
                             <h4>Transaction History</h4>
@@ -293,18 +270,20 @@ class TransactionRecords extends Component {
                                 </thead>
 
                                 <tbody>
-                                {transactionslist !== [] ? transactionslist.map((item, key) => (
-                                    <tr>
-                                        <th>{item[0]}</th>
-                                        <th>{item[1]}</th>
-                                        <th>{item[3]}</th>
-                                        <th>{item[2]}</th>
-                                        <th>{item[4]}</th>
-                                            
-                                        
-                                    </tr>
-                                )) : null}
-                            </tbody>
+                                    {transactionslist !== [] ? transactionslist.map((item, key) => (
+                                        <tr>
+                                            <th>
+                                                <Moment format="YYYY/MM/DD" unix='true'>{item[0]}</Moment>
+                                            </th>
+                                            <th>{item[1]}</th>
+                                            <th>{item[3]}</th>
+                                            <th>{item[2]}</th>
+                                            <th>{item[5]}</th>
+
+
+                                        </tr>
+                                    )) : null}
+                                </tbody>
                             </table>
                         </div>
 

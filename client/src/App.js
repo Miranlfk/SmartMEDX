@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import './App.css'
-import { getWeb3 } from "./getWeb3"
-import map from "./artifacts/deployments/map.json"
-import { getEthereum } from "./getEthereum"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
-import Herosection from "./HomePage/components/HeroSection";
-
 import Dashboard from "./DashBoard/Dashboard"
 import RecordDetails from "./Records/RecordDetails"
 import SignIn from "./auth/SignIn"

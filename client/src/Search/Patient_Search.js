@@ -26,8 +26,8 @@ class Patient_Search extends Component {
         console.log(patientID)
         return (
             <div className="container">
-                <form className="black " >
-                    <h5 className="white-text text-darken-3">Search</h5>
+                <form className=" teal darken-1 " >
+                    <h5 className="text-darken-3">Search</h5>
                     <div className="input-field">
                         <label htmlFor="text">Patient ID</label>
                         <input type="text" id="patientID" onChange={this.handleChange} />

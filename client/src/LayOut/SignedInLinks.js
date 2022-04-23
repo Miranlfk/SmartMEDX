@@ -27,12 +27,7 @@ const SignedInLinks = (props) => {
                     </li>
                     : null
                 }
-                 {auth_i ?
-                    <li>
-                        <NavLink to="/CLAIM">Add Claim</NavLink>
-                    </li>
-                    : null
-                }
+                 
                 <li>
                     {/* Triggering SignOut Options  */}
                     <a onClick={auth ? props.signOut : auth_p ? props.patient_signOut :auth_i ? props.insurance_signOut : null }><Link to={"/"}>Log Out</Link></a>

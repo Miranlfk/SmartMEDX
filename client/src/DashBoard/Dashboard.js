@@ -20,7 +20,7 @@ class Dashboard extends Component {
             return (
               <div class="center">
                 <div class="card-panel hoverable">
-                  <img class="rounded-circle z-depth-2" alt="100x100" src="https://i.pravatar.cc/300?img=5"
+                  <img class="rounded-circle z-depth-2" alt="100x100" src="https://i.pravatar.cc/300?img=59"
                     data-holder-rendered="true"></img>
                   <div class="card-panel blue darken-2">
                     <div class="card-panel-content white-text">
@@ -45,7 +45,7 @@ class Dashboard extends Component {
 
                         {/* searching relevant patient */}
                         </div>
-                        <span class="card-title white-text">Search Patient</span>
+                        <span class="card-title">Search Patient</span>
                         <div class="card-content">
                           <h5>Access to Relevant Patient</h5>
                           <Patient_Search />
