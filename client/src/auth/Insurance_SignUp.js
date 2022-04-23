@@ -121,9 +121,9 @@ class Insurance_SignUp extends Component {
                                         </div>
                                     </div>
 
-                                    <Link to='/Profile' >
+                                    {/* <Link to='/Profile' >
                                         <Button className='next'> Next</Button>
-                                    </Link>
+                                    </Link> */}
 
                                 </Form>
                             </Col>

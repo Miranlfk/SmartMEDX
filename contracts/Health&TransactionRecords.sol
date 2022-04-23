@@ -6,16 +6,17 @@ pragma solidity ^0.8.7;
 contract HealthRecords{
     
     bytes10 _P_ID;
+    bool approved = false;
 
 //Creating the structure of Patients by declaring attributes
     struct Patient{
 
         string Email;
-        string firstName;
-        string lastName;
-        uint NIC;
+        string firstName;       
+        string lastName; 
+        uint NIC;        
         string Career;
-        string Address;
+        string Address;        
         string CurrentMedication;
         address accountNum;
 
@@ -51,7 +52,7 @@ contract HealthRecords{
     }
     
 
-    mapping(address => Record[]) public records;// mapping for user to unique records 
+    mapping(address => Record[]) records;// mapping for user to unique records 
    
     //adding Health Records to specified patient account
     function adding_Record(string memory _FID,string memory _fileName,string memory _fileType, uint _date, bytes10 _PatientID) public{
@@ -70,5 +71,54 @@ contract HealthRecords{
         Patient memory patient = PatientList[_PatientID];
         return records[patient.accountNum].length;
     }
+
+
+
+ // -------------------------------------------Transaction Handling-------------------------------------------\\
+
+//Creating the structure of Transactions and declaring attributes
+    struct Transaction {
+        uint Date;
+        string surgeryName;
+        uint claim;
+        uint surgeryCost;
+        uint patientPayment;
+        uint patientfunds;
+    }
+    
+    
+
+    //mapping the transactions with the address 
+    mapping(address => Transaction[]) public TransactionList;
+
+   
+
+    function setApprovedStatus(bool status) public{
+            approved = status;
+    }
+
+    function getApprovedStatus() public view returns (bool) {
+            return approved;
+    }
+    
+    //Function to add a Transaction into the TransactionList
+    function addTransaction(bytes10 _PatientID, uint _date, string memory _surgeryName,  uint _claim, uint _sCost, uint _pCost, uint _funds)  public{
+        Patient memory patient = PatientList[_PatientID];
+        TransactionList[patient.accountNum].push(Transaction({Date: _date, surgeryName: _surgeryName, claim :_claim, surgeryCost : _sCost, patientPayment : _pCost, patientfunds : _funds}));
+    }
+    
+    //Function to retrieve a Transaction from the TransactionList
+    function retrieveTransaction(uint _id, bytes10 _PatientID) public view returns(uint, string memory, uint, uint, uint, uint){
+            Patient memory patient = PatientList[_PatientID];
+            Transaction memory newtransaction = TransactionList[patient.accountNum][_id];
+           return (newtransaction.Date, newtransaction.surgeryName, newtransaction.claim, newtransaction.surgeryCost, newtransaction.patientPayment, newtransaction.patientfunds);
+    }
+    
+    //Function to retrieve the Length of the TransactionList
+    function getTransactionLength(bytes10 _PatientID) public view returns(uint){
+        Patient memory patient = PatientList[_PatientID];
+        return TransactionList[patient.accountNum].length;
+    }
+
     
 }

@@ -65,25 +65,18 @@ class TransactionRecords extends Component {
     loadInitialContracts = async () => {
 
         var _chainID = 0;
-        if (this.state.chainid === 3) {
-            _chainID = 3;
-        }
+       
         if (this.state.chainid === 1337) {
             _chainID = "dev"
         }
-
-
-        const transactions = await this.loadContract(_chainID, "Transactions")
+       
         const healthRecords = await this.loadContract(_chainID, "HealthRecords")
 
-
-
-        if (!transactions || !healthRecords) {
+        if (!healthRecords) {
             return
         }
 
-        this.setState({
-            transactions,
+        this.setState({            
             healthRecords
         })
     }
@@ -132,30 +125,21 @@ class TransactionRecords extends Component {
         try {
 
             const { patient } = this.props;
-            const { accounts, healthRecords, transactions, surgeryCost, claimAmount, patientPayment, patientfunds } = this.state;
+            const { accounts, healthRecords,   claimAmount, patientPayment} = this.state;
 
             const patientID = patient.patientID;
             console.log(patientID)
             let _account = await healthRecords.methods.patientIdentity(patientID).call({ from: accounts[0] });
             console.log(_account);
-            let patientfund = await transactions.methods.setPatientFunds(patient.patientfunds).call({ from: accounts[0] });
-            console.log(patientfund);
-
-            await transactions.methods.setSurgeryCost(patient.SurgeryCost).call({ from: accounts[0] });
-
-
-            await transactions.methods.setClaim(claimAmount).call({ from: accounts[0] });
-
-
+            
             let timeStamp = Math.round(+ new Date() / 1000);
             console.log(timeStamp)
-            await transactions.methods.setDate(timeStamp).call({ from: accounts[0] });
-
+            
             const SurgeryName = patient.CurrentMedication;
             let _surgeryCost = patient.SurgeryCost;
             let _patientfunds = patient.patientfunds;
 
-            let trans = transactions.methods.addTransaction(patientID, timeStamp, SurgeryName, claimAmount, _surgeryCost, patientPayment, _patientfunds).send({ from: accounts[0] });
+            let trans = healthRecords.methods.addTransaction(patientID, timeStamp, SurgeryName, claimAmount, _surgeryCost, patientPayment, _patientfunds).send({ from: accounts[0] });
             console.log(trans);
 
         }
@@ -168,16 +152,16 @@ class TransactionRecords extends Component {
     getTransactions = async () => {
 
         const { patient } = this.props;
-        const { accounts, transactions } = this.state;
+        const { accounts, healthRecords } = this.state;
 
         const patientID = patient.patientID;
         console.log(patientID)
-        let TransactionListLen = await transactions.methods.getTransactionLength(patientID).call({ from: accounts[0] });
+        let TransactionListLen = await healthRecords.methods.getTransactionLength(patientID).call({ from: accounts[0] });
         console.log(TransactionListLen)
         let Transactions = [];
 
         for (let i = 0; i < TransactionListLen; i++) {
-            let trans = await transactions.methods.retrieveTransaction(i, patientID).call({ from: accounts[0] });
+            let trans = await healthRecords.methods.retrieveTransaction(i, patientID).call({ from: accounts[0] });
             Transactions.push(trans);
         }
         this.setState({ transactionslist: Transactions });
@@ -204,7 +188,7 @@ class TransactionRecords extends Component {
 
         if (patient || patientIdentity || insuranceIdentity) {
             console.log(patient.firstName)
-            const { auth, authError } = this.props;
+            const { authError } = this.props;
             return (
                 <div>
                     {!this.state.web3 &&
@@ -221,7 +205,7 @@ class TransactionRecords extends Component {
                                 <h5>Patient ID :{patient.patientID}</h5>
                                 <h5>Current Medication Status :{patient.CurrentMedication}</h5>
                                 <h5>Surgery Cost :{patient.SurgeryCost}</h5>
-                                {/* <h5>Last Updated :{patient.updatedAt}</h5> */}
+                                
                             </div>
 
                         </div>
@@ -245,7 +229,7 @@ class TransactionRecords extends Component {
                                         <label htmlFor="title">Current Medication</label>
                                     </div>
                                     <div>
-                                        <button type="submit" disabled={!isAccountsUnlocked} className="btn pink lighten-1 z-depth-0">Settle the Claim</button>
+                                        <button type="submit" disabled={!isAccountsUnlocked} className="btn blue lighten-1 z-depth-0">Settle the Claim</button>
                                         <div className="center red-text">
                                             {authError ? <p>{authError}</p> : null}
                                         </div>
@@ -257,7 +241,7 @@ class TransactionRecords extends Component {
                         </div>
                         <div class="highlight">
                             <h4>Transaction History</h4>
-                            <button className="btn deep-orange z-depth-1" onClick={this.getTransactions}>Show Transactions</button>
+                            <button className="btn teal z-depth-1" onClick={this.getTransactions}>Show Transactions</button>
                             <table>
                                 <thead>
                                     <tr>

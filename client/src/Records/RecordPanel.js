@@ -10,7 +10,7 @@ const RecordSummary = ({ record }) => {
                 <div className="row" >
                     <div class="col s12 m7" >
                         
-                        <div class="card-panel teal darken-4" style={{ borderRadius: "12px" }} >
+                        <div class="card-panel grey darken-4 z-index 1" style={{ borderRadius: "12px" }} >
                             <div class="card-panel-image">
                                 <i class="large material-icons">assignment</i>
                             </div>
