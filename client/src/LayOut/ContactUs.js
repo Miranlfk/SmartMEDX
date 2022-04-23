@@ -23,12 +23,12 @@ const ContactUs = () => {
               <Col lg='5' className="mb-5">
                   <h3 className="color_sec py-4">Get in touch</h3>
                   <address>
-                        <strong> <AiOutlineMail size={35}/>  liyanagearchana@gmail.com</strong>
+                        <strong> <AiOutlineMail size={35}/>  info@smartmedx.com</strong>
                         
                         <br/>
                         <br/>
                         <p>
-                            <strong><BsTelephoneInbound size={30}/> +94760073612</strong>
+                            <strong><BsTelephoneInbound size={30}/> +94112354354</strong>
                         </p>
                    </address>
                    <p>For further Inquiries or technical support you can get in touch with our Developers  through the mail, phone number or send

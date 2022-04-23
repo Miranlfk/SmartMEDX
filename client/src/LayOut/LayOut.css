@@ -130,29 +130,24 @@
     
     .About :hover {
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    }
-    
-    
-    
+    }    
     
     .aboutheadmission {
     
       border: 5px;
       display: flex;
       justify-content: center;
-      color: #185BA2;
-    
-    
+      color: #185BA2;    
     }
+
     
     .aboutheadmissionpara {
+      
       margin-bottom: 5%;
       border: 5px;
       display: flex;
       justify-content: center;
-      color: #185BA2;
-    
-    
+      color: #185BA2;    
     }
     
     
@@ -200,23 +195,14 @@
     
     .teampicture {
       width: 50%;
-      margin-left: 25%;
-    
-    }
-    
-    .descriptionmember {
-      padding: 22px 45px;
     }
     
     .titleteam {
-      margin-top: 4%;
+
       display: flex;
       justify-content: center;
       color: #185BA2;
-    }
-    
-    .names {
-      margin-left: 18%;
+
     }
 
     .Contact-UsBackground {

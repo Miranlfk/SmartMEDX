@@ -2,11 +2,11 @@ import React from 'react'
 import './LayOut.css';
 
 
-import Archana from '../Images/Archana.jpg';
-import miran2 from '../Images/miran2.jpeg';
-import hasindu1 from '../Images/hasindu1.jpeg';
-import kavith from '../Images/kavith.jpeg';
-import ravindu1 from '../Images/ravindu1.jpeg';
+import Archana from '../images/Archana.jpg';
+import miran2 from '../images/miran2.jpeg';
+import hasindu1 from '../images/hasindu1.jpeg';
+import kavith from '../images/kavith.jpeg';
+import ravindu1 from '../images/ravindu1.jpeg';
 
 function AboutPage() {
   return (
