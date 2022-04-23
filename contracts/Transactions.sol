@@ -18,77 +18,70 @@ contract Transactions is HealthRecords{
         uint patientfunds;
     }
     
-    Transaction public transaction = Transaction({
-            Date: 0,
-            surgeryName: "",
-            claim : 0,
-            surgeryCost : 0,
-            patientPayment : 0,
-            patientfunds : 0
-    });
+    
 
     //mapping the transactions with the address 
     mapping(address => Transaction[]) public TransactionList;
 
     //setter function to set the Date
-    function setDate(uint _date) public {
-            transaction.Date = _date;
-    }
+//     function setDate(uint _date) public {
+//             Date = _date;
+//     }
     
-    //getter function to retrieve the Date
-    function getDate() public view returns (uint) {
-            return transaction.Date;
-    }
+//     //getter function to retrieve the Date
+//     function getDate() public view returns (uint) {
+//             return transaction.Date;
+//     }
     
-    //setter function to set the Surgery Name
-    function setSurgeryName(string memory _sName) public {
-            transaction.surgeryName = _sName;
-    }
+//     //setter function to set the Surgery Name
+//     function setSurgeryName(string memory _sName) public {
+//             transaction.surgeryName = _sName;
+//     }
     
-    //getter function to retrieve the Surgery Name
-    function getSurgeryName() public view returns (string memory) {
-            return transaction.surgeryName;
-    }
+//     //getter function to retrieve the Surgery Name
+//     function getSurgeryName() public view returns (string memory) {
+//             return transaction.surgeryName;
+//     }
 
-    //setter function to set the Claimable Amount : set by an Insurance Agent
-    function setClaim(uint _claim) public {
-            transaction.claim = _claim;
-    }
+//     //setter function to set the Claimable Amount : set by an Insurance Agent
+//     function setClaim(uint _claim) public {
+//             transaction.claim = _claim;
+//     }
     
-    //getter function to retrieve the Claimable Amount
-    function getClaim() public view returns (uint) {
-            return transaction.claim;
-    }
+//     //getter function to retrieve the Claimable Amount
+//     function getClaim() public view returns (uint) {
+//             return transaction.claim;
+//     }
     
-    //setter function to set the Surgery Cost : set by a Doctor / Medical Team
-    function setSurgeryCost(uint _sCost) public {
-            transaction.surgeryCost = _sCost;
-    }
+//     //setter function to set the Surgery Cost : set by a Doctor / Medical Team
+//     function setSurgeryCost(uint _sCost) public {
+//             transaction.surgeryCost = _sCost;
+//     }
     
-    //getter function to retrieve the Surgery Cost
-    function getSurgeryCost() public view returns (uint) {
-            return transaction.surgeryCost;
-    }
+//     //getter function to retrieve the Surgery Cost
+//     function getSurgeryCost() public view returns (uint) {
+//             return transaction.surgeryCost;
+//     }
     
-    //setter function to set the Patient Charge : set within a function 
-    function setPatientCharge(uint _pCost) public {
-            transaction.patientPayment = _pCost;
-    }
+//     //setter function to set the Patient Charge : set within a function 
+//     function setPatientCharge(uint _pCost) public {
+//             transaction.patientPayment = _pCost;
+//     }
     
-    //getter function to retrieve the Patient Charge
-    function getPatientCharge() public view returns (uint) {
-            return transaction.patientPayment;
-    }
+//     //getter function to retrieve the Patient Charge
+//     function getPatientCharge() public view returns (uint) {
+//             return transaction.patientPayment;
+//     }
     
-    //setter function to set the Patient Funds : set by a Patient 
-    function setPatientFunds(uint _funds) public {
-            transaction.patientfunds = _funds;
-    }
+//     //setter function to set the Patient Funds : set by a Patient 
+//     function setPatientFunds(uint _funds) public {
+//             transaction.patientfunds = _funds;
+//     }
     
-    //getter function to retrieve the Patient Funds
-    function getPatientFunds() public view returns (uint) {
-            return transaction.patientfunds;
-    }
+//     //getter function to retrieve the Patient Funds
+//     function getPatientFunds() public view returns (uint) {
+//             return transaction.patientfunds;
+//     }
 
     function setApprovedStatus(bool status) public{
             approved = status;
@@ -107,7 +100,7 @@ contract Transactions is HealthRecords{
     //Function to retrieve a Transaction from the TransactionList
     function retrieveTransaction(uint _id, bytes10 _PatientID) external view returns(uint, string memory, uint, uint, uint, uint){
             Patient memory patient = PatientList[_PatientID];
-            Transaction storage newtransaction = TransactionList[patient.accountNum][_id];
+            Transaction memory newtransaction = TransactionList[patient.accountNum][_id];
            return (newtransaction.Date, newtransaction.surgeryName, newtransaction.claim, newtransaction.surgeryCost, newtransaction.patientPayment, newtransaction.patientfunds);
     }
     
@@ -118,24 +111,24 @@ contract Transactions is HealthRecords{
     }
     
     //Function to Handle a CLaim
-    function handleClaim() external {
+    function handleClaim(uint claim, uint surgeryCost, uint patientPayment, uint patientfunds) external {
             //first checks if claimable amount approved is greater than SurgeryCost then the Patient is approved
-            if (getClaim() >= getSurgeryCost() ){
+            if (claim >= surgeryCost){
                     setApprovedStatus(true);
             }
             else {
                     //since Surgery Cost is gretaer the remainder is assigned as the charge from Patient
-                    setPatientCharge(getSurgeryCost() - getClaim());
-                    manageFunds();
+                    patientPayment = surgeryCost - claim;
+                    manageFunds(patientPayment, patientfunds);
             }
 
     }
     
     //Function to manage Funds determinig if Patient has sufficient funds to proceed with a Surgery
-    function manageFunds() internal {
+    function manageFunds(uint patientPayment, uint patientfunds) internal {
             //requires patient funds to be greater than the patient charge for surgery to be appproved.
-            require (getPatientFunds() > getPatientCharge(), "Insufficient Patient Funds");
-            approved = true;
+            require (patientfunds > patientPayment, "Insufficient Patient Funds");
+            setApprovedStatus(true);
     }
 
 
