@@ -10,15 +10,7 @@ def setup(module_isolation):
     pass
 
 @pytest.fixture()
-def transactions(accounts, Transactions):
-    """
-    Yield a `Contract` object for the Transactions contract.
-    """
-    yield accounts[0].deploy(Transactions)
-
-
-@pytest.fixture()
-def healthrecords(accounts, HealthRecords):
+def healthNtransactionrecords(accounts, HealthRecords):
     """
     Yield a `Contract` object for the HealthRecords contract.
     """

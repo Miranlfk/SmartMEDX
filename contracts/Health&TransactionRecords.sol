@@ -8,7 +8,7 @@ contract HealthRecords{
     bytes10 _P_ID;
     bool approved = false;
 
-//Creating the structure of Patients by declaring attributes
+    //Creating the structure of Patients by declaring attributes
     struct Patient{
 
         string Email;
@@ -52,7 +52,7 @@ contract HealthRecords{
     }
     
 
-    mapping(address => Record[]) records;// mapping for user to unique records 
+    mapping(address => Record[]) public records;// mapping for user to unique records 
    
     //adding Health Records to specified patient account
     function adding_Record(string memory _FID,string memory _fileName,string memory _fileType, uint _date, bytes10 _PatientID) public{
@@ -76,7 +76,7 @@ contract HealthRecords{
 
  // -------------------------------------------Transaction Handling-------------------------------------------\\
 
-//Creating the structure of Transactions and declaring attributes
+    //Creating the structure of Transactions and declaring attributes
     struct Transaction {
         uint Date;
         string surgeryName;
