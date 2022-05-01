@@ -46,7 +46,7 @@ class SignUp extends Component {
 
     render() {
         const { auth, authError } = this.props;
-        if (auth.uid) return <Redirect to="/Profile" />;
+        if (auth.uid) return <Redirect to="/Medical_Dashboard" />;
         return (
             <>
 
@@ -103,20 +103,17 @@ class SignUp extends Component {
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="Qulification" placeholder='Contact Number' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="Qualification" placeholder='Qualification' onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' placeholder='Profession' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="profession" placeholder='Profession' onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' placeholder='Address' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="Address" placeholder='Address' onChange={this.handleChange} />
                                     </Form.Group>
-
-                                    <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' placeholder='Password' onChange={this.handleChange} />
-                                    </Form.Group>
+                                  
 
                                     <div className="input-field">
                                         <button className="btn blue darken-1 z-depth-0" onClick={this.handleSubmit}>Sign Up</button>

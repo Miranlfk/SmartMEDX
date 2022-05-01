@@ -65,18 +65,18 @@ class TransactionRecords extends Component {
     loadInitialContracts = async () => {
 
         var _chainID = 0;
-       
+
         if (this.state.chainid === 1337) {
             _chainID = "dev"
         }
-       
+
         const healthRecords = await this.loadContract(_chainID, "HealthRecords")
 
         if (!healthRecords) {
             return
         }
 
-        this.setState({            
+        this.setState({
             healthRecords
         })
     }
@@ -125,16 +125,16 @@ class TransactionRecords extends Component {
         try {
 
             const { patient } = this.props;
-            const { accounts, healthRecords,   claimAmount, patientPayment} = this.state;
+            const { accounts, healthRecords, claimAmount, patientPayment } = this.state;
 
             const patientID = patient.patientID;
             console.log(patientID)
             let _account = await healthRecords.methods.patientIdentity(patientID).call({ from: accounts[0] });
             console.log(_account);
-            
+
             let timeStamp = Math.round(+ new Date() / 1000);
             console.log(timeStamp)
-            
+
             const SurgeryName = patient.CurrentMedication;
             let _surgeryCost = patient.SurgeryCost;
             let _patientfunds = patient.patientfunds;
@@ -181,12 +181,12 @@ class TransactionRecords extends Component {
     render() {
 
         const isAccountsUnlocked = this.state.accounts ? this.state.accounts.length > 0 : false
-        const { patient, patientIdentity, insuranceIdentity } = this.props;
+        const { patient, patientIdentity } = this.props;
         const {
             transactionslist
         } = this.state
 
-        if (patient || patientIdentity || insuranceIdentity) {
+        if (patient || patientIdentity) {
             console.log(patient.firstName)
             const { authError } = this.props;
             return (
@@ -205,7 +205,7 @@ class TransactionRecords extends Component {
                                 <h5>Patient ID :{patient.patientID}</h5>
                                 <h5>Current Medication Status :{patient.CurrentMedication}</h5>
                                 <h5>Surgery Cost :{patient.SurgeryCost}</h5>
-                                
+
                             </div>
 
                         </div>
@@ -218,61 +218,60 @@ class TransactionRecords extends Component {
                             : null
                     }
 
-                    <div className="Transaction">
-                        <div>
 
-                            {patientIdentity ?
-                                <form className="white" onSubmit={this.setTransactionDetails}>
-                                    <h5 className="grey-text text-darken-3">Add claim Amount</h5>
-                                    <div className="input-field">
-                                        <input type="text" id="claimAmount" onChange={this.handleChange} />
-                                        <label htmlFor="title">Current Medication</label>
-                                    </div>
-                                    <div>
-                                        <button type="submit" disabled={!isAccountsUnlocked} className="btn blue lighten-1 z-depth-0">Settle the Claim</button>
-                                        <div className="center red-text">
-                                            {authError ? <p>{authError}</p> : null}
-                                        </div>
-                                    </div>
 
-                                </form>
-                                : null
-                            }
-                        </div>
-                        <div class="highlight">
-                            <h4>Transaction History</h4>
-                            <button className="btn teal z-depth-1" onClick={this.getTransactions}>Show Transactions</button>
-                            <table>
-                                <thead>
+                    {patientIdentity ?
+                        <form className="white" onSubmit={this.setTransactionDetails}>
+                            <h5 className="grey-text text-darken-3">Add claim Amount</h5>
+                            <div className="input-field">
+                                <input type="text" id="claimAmount" onChange={this.handleChange} />
+                                <label htmlFor="title">Current Medication</label>
+                            </div>
+                            <div>
+                                <button type="submit" disabled={!isAccountsUnlocked} className="btn blue lighten-1 z-depth-0">Settle the Claim</button>
+                                <div className="center red-text">
+                                    {authError ? <p>{authError}</p> : null}
+                                </div>
+                            </div>
+
+                        </form>
+                        : null
+                    }
+
+                    <div class="highlight">
+                        <h4>Transaction History</h4>
+                        <button className="btn teal z-depth-1" onClick={this.getTransactions}>Show Transactions</button>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Surgery Name</th>
+                                    <th>Surgery Cost</th>
+                                    <th>Surgery Claim</th>
+                                    <th>Patient Funds</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {transactionslist !== [] ? transactionslist.map((item, key) => (
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Surgery Name</th>
-                                        <th>Surgery Cost</th>
-                                        <th>Surgery Claim</th>
-                                        <th>Patient Funds</th>
+                                        <th>
+                                            <Moment format="YYYY/MM/DD" unix='true'>{item[0]}</Moment>
+                                        </th>
+                                        <th>{item[1]}</th>
+                                        <th>{item[3]}</th>
+                                        <th>{item[2]}</th>
+                                        <th>{item[5]}</th>
+
+
                                     </tr>
-                                </thead>
-
-                                <tbody>
-                                    {transactionslist !== [] ? transactionslist.map((item, key) => (
-                                        <tr>
-                                            <th>
-                                                <Moment format="YYYY/MM/DD" unix='true'>{item[0]}</Moment>
-                                            </th>
-                                            <th>{item[1]}</th>
-                                            <th>{item[3]}</th>
-                                            <th>{item[2]}</th>
-                                            <th>{item[5]}</th>
-
-
-                                        </tr>
-                                    )) : null}
-                                </tbody>
-                            </table>
-                        </div>
-
+                                )) : null}
+                            </tbody>
+                        </table>
                     </div>
-                </div >
+
+                </div>
+                
 
             );
         } else {

@@ -46,7 +46,7 @@ class Insurance_SignUp extends Component {
     render() {
         const { auth, authError } = this.props;
         //condition to Redirect profile page if User has Signed In correctly
-        if (auth.uid) return <Redirect to="/Profile" />;
+        if (auth.uid) return <Redirect to="/Insurance_dashboard" />;
         return (
             <div>
 

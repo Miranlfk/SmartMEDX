@@ -74,7 +74,7 @@ export const signUp = newDoctor => {
                 initials: newDoctor.firstName[0] + newDoctor.lastName[0],
                 email: newDoctor.email,
                 NIC: newDoctor.nic,
-                Qulification: newDoctor.Qulification,
+                Qualification: newDoctor.Qualification,
                 Address: newDoctor.Address,
                 profession: newDoctor.profession
             });
