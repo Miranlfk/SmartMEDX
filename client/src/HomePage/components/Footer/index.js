@@ -52,8 +52,8 @@ const Footer = () => {
                         
                           <FooterLink><a href='instagram.com'>Instagram</a></FooterLink>
                           <FooterLink ><a href='facebook.com'>Facebook</a></FooterLink>
-                        <FooterLink to="/signin">Youtube</FooterLink>
-                        <FooterLink to="/signin">Twitter</FooterLink>
+                        <FooterLink to="youtube.com">Youtube</FooterLink>
+                        <FooterLink to="twitter.com">Twitter</FooterLink>
                         
                     
                 </FooterLinksItems>

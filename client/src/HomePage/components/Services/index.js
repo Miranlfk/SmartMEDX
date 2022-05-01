@@ -19,18 +19,18 @@ const Services = () => {
         <ServicesWrapper>
             <ServicesCard>
                 <ServicesIcon src={Icon1}/>
-                <ServicesH2>Reduce expenses</ServicesH2>
-                <ServicesP>we help decrease your expeditures and increase your healthy life.  </ServicesP>
+                <ServicesH2><b>Reduce expenses</b></ServicesH2>
+                <ServicesP>We help decrease your expenses and promote your healthy life.</ServicesP>
             </ServicesCard>
             <ServicesCard>
                 <ServicesIcon src={Icon2}/>
-                <ServicesH2>Virtual Offices</ServicesH2>
-                <ServicesP>you can connect our platform virtualy anytime anywhere in the world.</ServicesP>
+                <ServicesH2><b>Enhanced Security</b></ServicesH2>
+                <ServicesP>Your records are securely stored on the Blockchain and only authorized users to access to this sensitive data.</ServicesP>
             </ServicesCard>
             <ServicesCard>
                 <ServicesIcon src={Icon3}/>
-                <ServicesH2> Benifits</ServicesH2>
-                <ServicesP>unlock our special membership card and get free phamaceuticals</ServicesP>
+                <ServicesH2><b> Benefits</b></ServicesH2>
+                <ServicesP>More accurate and efficient document processing.</ServicesP>
             </ServicesCard>
         </ServicesWrapper>
     </ServicesContainer>
