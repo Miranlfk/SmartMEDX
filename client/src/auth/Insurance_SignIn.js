@@ -33,7 +33,7 @@ class Insurance_SignIn extends Component {
   render() {
     const { insuranceMembers, authError, auth } = this.props;
     return (
-      <div>
+      <div >
         <div>
         {/* mapping the specific Insurance with id */}
           {insuranceMembers && insuranceMembers.map(Insurance => {

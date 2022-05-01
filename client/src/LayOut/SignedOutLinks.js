@@ -14,7 +14,7 @@ const SignedOutLinks = () => {
                 </li>
 
                 <li>
-                    <NavLink to="/AboutUs">About US</NavLink>
+                    <NavLink to="/AboutUs">About Us</NavLink>
                 </li>
                 <li>
                     <NavLink to="/ContactUs">Contact Us</NavLink>

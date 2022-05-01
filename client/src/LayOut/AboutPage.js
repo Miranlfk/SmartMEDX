@@ -10,7 +10,7 @@ import ravindu1 from '../images/ravindu1.jpeg';
 
 function AboutPage() {
   return (
-       <>
+    <div className='aboutbG'>
           <div className="About">
                   
                     <h1 className="aboutheadmission" >-Our Mission-</h1>
@@ -82,7 +82,7 @@ function AboutPage() {
           </div>
 
 
-  </>          
+    </div>          
   );      
 };
     
