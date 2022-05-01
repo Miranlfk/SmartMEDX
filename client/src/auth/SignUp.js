@@ -83,35 +83,35 @@ class SignUp extends Component {
 
                                 <Form>
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='email' id="email" placeholder='Enter email' onChange={this.handleChange} />
+                                        <Form.Control type='email' id="email" placeholder='Enter email' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='password' id="password" placeholder='password' onChange={this.handleChange} />
+                                        <Form.Control type='password' id="password" placeholder='password' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicPassword'>
-                                        <Form.Control type='text' id="firstName" placeholder='First Name' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="firstName" placeholder='First Name' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicPassword'>
-                                        <Form.Control type='text' id="lastName" placeholder='Last Name' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="lastName" placeholder='Last Name' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="nic" placeholder='Nic Number' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="nic" placeholder='Nic Number' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="Qualification" placeholder='Qualification' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="Qualification" placeholder='Qualification' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="profession" placeholder='Profession' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="profession" placeholder='Profession' required onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                        <Form.Control type='text' id="Address" placeholder='Address' onChange={this.handleChange} />
+                                        <Form.Control type='text' id="Address" placeholder='Address' required onChange={this.handleChange} />
                                     </Form.Group>
                                   
 

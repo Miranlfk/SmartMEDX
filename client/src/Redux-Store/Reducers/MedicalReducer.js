@@ -18,11 +18,11 @@ const MedicalReducer = (state = initState, action) => {
         case "NOTIFY":
             console.log("Added patient", action.record);
             return state;
-    
-    
+
+
         case "NOTIFY_ERROR":
             console.log("notify error");
-            return state;    
+            return state;
 
 
         case "LOGIN_FAILED":
@@ -50,7 +50,8 @@ const MedicalReducer = (state = initState, action) => {
             console.log("signup success");
             return {
                 ...state,
-                authError: null
+                authError: null,
+                isMedical: true
             };
         case "SIGNUP_ERROR":
             console.log("signup error");

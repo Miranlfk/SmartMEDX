@@ -42,7 +42,8 @@ const InsuranceReducer = (state = initState, action) => {
             console.log("signup as Insurance success");
             return {
                 ...state,
-                authError: null
+                authError: null,
+                isInsurance: true
             };
         case "SIGNUP_ERROR":
             console.log("signup as Insurance error");
