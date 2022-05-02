@@ -1,4 +1,23 @@
-# Brownie React Mix
+# SmartMEDX
+
+Welcome to the official Github repository SmartMEDX. SmartMEDX is a Blockchain based Electronic Health Record System which has been developed on the Ethereum Platform using Solidity. This application mainly focusses on safe and secure transferring of Patients' Medical Records between the differernt parties within the system. The application features 3 types of users which includes Patients, Medical Staff (Admins) and Insurance Agents (3rd Parties). This application hopes to resolve the inefficiencies in the Healthcare Industry pertaining to transfer of Health records and the safe and secure storage of Health records.
+
+This .md file will help reader to understand the details of code and installation of the SmartMEDX web application.
+
+Cheers! Team Kali Rebels (SE-61)
+
+Team members
+
+|          Name             | Student ID    |      UOW Number   |           IIT Email               |
+| ------------------------- | ------------- | ----------------- | --------------------------------- |
+| Miran Kurukulasuriya      |   20200897    |      18388532/1   |   miran.20200897@iit.ac.lk        |
+| Hasindu Ramanayake        |   20200714    |      18325645/1   |   hasindu.20200714@iit.ac.lk      |
+| Archana Liyanage          |   20200626    |      18335462/1   |   archana.20200626@iit.ac.lk      |
+| Ravindu Lakshitha         |   20191094    |      17903503/1   |   ravindu.20191094@iit.ac.lk      |
+| Kavith Jayasuriya         |   20200604    |      18335187/1   |   kavith.20200604@iit.ac.lk       |
+
+
+## Brownie React Mix
 
 This mix comes with everything you need to start using [React](https://reactjs.org/) with a Brownie project.
 
